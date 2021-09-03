@@ -44,10 +44,10 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(new TranslatableText("command.health.set.success", i, hunger), true);
+            source.sendFeedback(new TranslatableText("command.hunger.set.success", i, hunger), true);
         }
         else {
-            throw new SimpleCommandExceptionType(new TranslatableText("command.health.set.fail")).create();
+            throw new SimpleCommandExceptionType(new TranslatableText("command.hunger.set.fail")).create();
         }
 
         return i;
@@ -63,10 +63,10 @@ public class HungerCommand {
         }
 
         if (hunger >= 0) {
-            source.sendFeedback(new TranslatableText("command.health.get.success", hunger), true);
+            source.sendFeedback(new TranslatableText("command.hunger.get.success", hunger), true);
         }
         else {
-            throw new SimpleCommandExceptionType(new TranslatableText("command.health.get.fail")).create();
+            throw new SimpleCommandExceptionType(new TranslatableText("command.hunger.get.fail")).create();
         }
 
         return (int)hunger;
@@ -85,10 +85,10 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(new TranslatableText("command.health.add.success", hunger, i), true);
+            source.sendFeedback(new TranslatableText("command.hunger.add.success", hunger, i), true);
         }
         else {
-            throw new SimpleCommandExceptionType(new TranslatableText("command.health.add.fail")).create();
+            throw new SimpleCommandExceptionType(new TranslatableText("command.hunger.add.fail")).create();
         }
 
         return i;

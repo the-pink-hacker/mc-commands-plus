@@ -5,6 +5,12 @@
     "command.health.get.fail": "Failed to get health",
     "command.health.set.success": "Set %s entities' health to %s",
     "command.health.set.fail": "Failed to set health",
+    "command.hunger.add.success": "Added %s hunger to %s entities",
+    "command.hunger.add.fail": "Failed to add hunger",
+    "command.hunger.get.success": "Entity's hunger is %s",
+    "command.hunger.get.fail": "Failed to get hunger",
+    "command.hunger.set.success": "Set %s entities' hunger to %s",
+    "command.hunger.set.fail": "Failed to set hunger",
     "command.name.success": "Successfully changed %s stack(s) to %s",
     "command.name.fail": "Failed to name item"
 }
