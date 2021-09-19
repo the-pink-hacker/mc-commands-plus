@@ -21,8 +21,7 @@ public class NameCommand {
                 .requires((commandSource) -> commandSource.hasPermissionLevel(2))
                 .then(CommandManager.argument("targets", EntityArgumentType.entities())
                         .then(CommandManager.argument("name", MessageArgumentType.message())
-                                .executes((context) -> {
-                                    return nameItem(context.getSource(), EntityArgumentType.getEntities(context, "targets"), MessageArgumentType.getMessage(context, "name").getString()); }))));
+                                .executes((context) -> nameItem(context.getSource(), EntityArgumentType.getEntities(context, "targets"), MessageArgumentType.getMessage(context, "name").getString())))));
     }
 
     private static int nameItem(ServerCommandSource source, Collection<? extends Entity> target, String name) throws CommandSyntaxException {
