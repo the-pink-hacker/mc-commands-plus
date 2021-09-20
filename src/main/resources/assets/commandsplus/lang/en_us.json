@@ -11,6 +11,8 @@
     "command.hunger.get.fail": "Failed to get hunger",
     "command.hunger.set.success": "Set %s entities' hunger to %s",
     "command.hunger.set.fail": "Failed to set hunger",
-    "command.name.success": "Successfully changed %s stack(s) to %s",
-    "command.name.fail": "Failed to name item"
+    "command.name.success": "Renamed changed %s stack(s) to %s",
+    "command.name.fail": "Failed to name item",
+    "command.setowner.success": "Set pet's owner to %s",
+    "command.setowner.fail": "Failed to set pet's owner"
 }
