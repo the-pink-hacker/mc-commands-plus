@@ -1,6 +1,7 @@
 package com.ryangar46.commandsplus;
 
 import com.ryangar46.commandsplus.server.command.NameCommand;
+import com.ryangar46.commandsplus.server.command.SetOwnerCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +15,7 @@ public class CommandsPlus implements ModInitializer {
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             NameCommand.register(dispatcher);
+            SetOwnerCommand.register(dispatcher);
         });
     }
 }
