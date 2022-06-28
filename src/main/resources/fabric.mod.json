@@ -1,37 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "namecommand",
-  "version": "${version}",
-
-  "name": "Commands Plus",
-  "description": "Adds more commands to minecraft",
+  "id": "commandsplus",
+  "version": "0.1",
+  "name": "Commands+",
+  "description": "",
   "authors": [
-    "RyanGar46 (Ryan Garrett)"
+    "Ryan Garrett (RyanGar46)"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/name-command",
-    "sources": "https://github.com/RyanGar46/MC-Name-Command"
+    "sources": "https://github.com/RyanGar46/mc-commands-plus"
   },
-
-  "license": "All Rights Reserved",
-  "icon": "assets/namecommand/textures/icon.png",
-
+  "license": "GPL-v3.0",
+  "icon": "assets/commandsplus/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.ryangar46.commandsplus.Main"
+      "com.ryangar46.commandsplus.CommandsPlus"
     ]
   },
   "mixins": [
+    "commandsplus.mixins.json"
   ],
-
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
-  },
-  "suggests": {
-    "another-mod": "*"
+    "minecraft": "~1.19",
+    "java": ">=17"
   }
 }

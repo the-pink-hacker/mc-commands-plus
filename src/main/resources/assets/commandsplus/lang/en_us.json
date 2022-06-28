@@ -11,9 +11,9 @@
     "command.hunger.get.fail": "Failed to get hunger",
     "command.hunger.set.success": "Set %s entities' hunger to %s",
     "command.hunger.set.fail": "Failed to set hunger",
-    "command.name.item.success": "Renamed item to: %s",
+    "command.name.item.success": "Renamed item to \"%s\"",
     "command.name.item.fail": "Failed to name item",
-    "command.name.entity.success": "Renamed entity to: %s",
+    "command.name.entity.success": "Renamed entity to \"%s\"",
     "command.name.entity.fail": "Failed to entity",
     "command.setowner.success": "Set pet's owner to %s",
     "command.setowner.fail": "Failed to set pet's owner"
