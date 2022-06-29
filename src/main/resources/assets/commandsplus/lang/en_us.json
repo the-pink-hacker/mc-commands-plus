@@ -7,7 +7,6 @@
     "command.health.set.success": "Set %s entities' health to %s",
     "command.hunger.add.fail": "Failed to add hunger",
     "command.hunger.add.success": "Added %s hunger to %s entities",
-    "command.hunger.query.fail": "Failed to query hunger",
     "command.hunger.query.success": "Entity's hunger is %s",
     "command.hunger.set.fail": "Failed to set hunger",
     "command.hunger.set.success": "Set %s entities' hunger to %s",
