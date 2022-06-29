@@ -1,5 +1,6 @@
 package com.ryangar46.commandsplus;
 
+import com.ryangar46.commandsplus.server.command.HealthCommand;
 import com.ryangar46.commandsplus.server.command.NameCommand;
 import com.ryangar46.commandsplus.server.command.SetOwnerCommand;
 import net.fabricmc.api.ModInitializer;
@@ -14,8 +15,10 @@ public class CommandsPlus implements ModInitializer {
     @Override
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            HealthCommand.register(dispatcher);
             NameCommand.register(dispatcher);
             SetOwnerCommand.register(dispatcher);
+            LOGGER.info("Registered commands");
         });
     }
 }
