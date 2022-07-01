@@ -1,8 +1,3 @@
-# Name Command
-A mod for Minecraft that adds a name command.
+# Commands+
 
-## Syntax:
-
-```
-/name target name
-```
+A Mod that adds new helpful commands to Minecraft.
