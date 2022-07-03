@@ -12,6 +12,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class HealthCommand {
@@ -19,6 +20,12 @@ public class HealthCommand {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("health")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")
+                        .then(CommandManager.argument("health", FloatArgumentType.floatArg(0.0f))
+                                .executes(context -> setHealth(
+                                        context.getSource(),
+                                        FloatArgumentType.getFloat(context, "health"))
+                                )
+                        )
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                 .then(CommandManager.argument("health", FloatArgumentType.floatArg(0.0f))
                                         .executes(context -> setHealth(
@@ -30,6 +37,12 @@ public class HealthCommand {
                         )
                 )
                 .then(CommandManager.literal("add")
+                        .then(CommandManager.argument("health", FloatArgumentType.floatArg())
+                                .executes(context -> addHealth(
+                                        context.getSource(),
+                                        FloatArgumentType.getFloat(context, "health"))
+                                )
+                        )
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                 .then(CommandManager.argument("health", FloatArgumentType.floatArg())
                                         .executes(context -> addHealth(
@@ -47,6 +60,7 @@ public class HealthCommand {
                                         EntityArgumentType.getEntity(context, "target"))
                                 )
                         )
+                        .executes(context -> queryHealth(context.getSource()))
                 )
         );
 
@@ -72,6 +86,13 @@ public class HealthCommand {
         return i;
     }
 
+    private static int setHealth(ServerCommandSource source, float health) throws CommandSyntaxException {
+        Collection<Entity> entities = new ArrayList<>();
+        entities.add(source.getEntity());
+
+        return setHealth(source, entities, health);
+    }
+
     private static int addHealth(ServerCommandSource source, Collection<? extends Entity> entities, float health) throws CommandSyntaxException {
         int i = 0;
 
@@ -91,6 +112,13 @@ public class HealthCommand {
         return i;
     }
 
+    private static int addHealth(ServerCommandSource source, float health) throws CommandSyntaxException {
+        Collection<Entity> entities = new ArrayList<>();
+        entities.add(source.getEntity());
+
+        return addHealth(source, entities, health);
+    }
+
     private static int queryHealth(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
         if (entity instanceof LivingEntity livingEntity) {
             source.sendFeedback(Text.translatable("command.health.query.success", livingEntity.getHealth()), false);
@@ -98,5 +126,9 @@ public class HealthCommand {
         }
 
         throw new SimpleCommandExceptionType(Text.translatable("command.health.query.fail")).create();
+    }
+
+    private static int queryHealth(ServerCommandSource source) throws CommandSyntaxException {
+        return queryHealth(source, source.getEntity());
     }
 }
