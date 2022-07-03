@@ -22,13 +22,13 @@ public class HungerCommand {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("hunger")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")
-                        .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
-                                .executes(context -> setFood(
-                                        context.getSource(),
-                                        IntegerArgumentType.getInteger(context, "food"))
-                                )
-                        )
                         .then(CommandManager.literal("food")
+                                .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
+                                        .executes(context -> setFood(
+                                                context.getSource(),
+                                                IntegerArgumentType.getInteger(context, "food"))
+                                        )
+                                )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
                                                 .executes(context -> setFood(
@@ -40,6 +40,12 @@ public class HungerCommand {
                                 )
                         )
                         .then(CommandManager.literal("exhaustion")
+                                .then(CommandManager.argument("exhaustion", FloatArgumentType.floatArg(0.0f))
+                                        .executes(context -> setExhaustion(
+                                                context.getSource(),
+                                                FloatArgumentType.getFloat(context, "exhaustion"))
+                                        )
+                                )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("exhaustion", FloatArgumentType.floatArg(0.0f))
                                                 .executes(context -> setExhaustion(
@@ -51,6 +57,12 @@ public class HungerCommand {
                                 )
                         )
                         .then(CommandManager.literal("saturation")
+                                .then(CommandManager.argument("saturation", FloatArgumentType.floatArg(0.0f))
+                                        .executes(context -> setSaturation(
+                                                context.getSource(),
+                                                FloatArgumentType.getFloat(context, "saturation"))
+                                        )
+                                )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("saturation", FloatArgumentType.floatArg(0.0f))
                                                 .executes(context -> setSaturation(
@@ -59,6 +71,12 @@ public class HungerCommand {
                                                         FloatArgumentType.getFloat(context, "saturation"))
                                                 )
                                         )
+                                )
+                        )
+                        .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
+                                .executes(context -> setFood(
+                                        context.getSource(),
+                                        IntegerArgumentType.getInteger(context, "food"))
                                 )
                         )
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
@@ -72,13 +90,13 @@ public class HungerCommand {
                         )
                 )
                 .then(CommandManager.literal("add")
-                        .then(CommandManager.argument("food", IntegerArgumentType.integer())
-                                .executes(context -> addFood(
-                                        context.getSource(),
-                                        IntegerArgumentType.getInteger(context, "food"))
-                                )
-                        )
                         .then(CommandManager.literal("food")
+                                .then(CommandManager.argument("food", IntegerArgumentType.integer())
+                                        .executes(context -> addFood(
+                                                context.getSource(),
+                                                IntegerArgumentType.getInteger(context, "food"))
+                                        )
+                                )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("food", IntegerArgumentType.integer())
                                                 .executes(context -> addFood(
@@ -90,6 +108,12 @@ public class HungerCommand {
                                 )
                         )
                         .then(CommandManager.literal("exhaustion")
+                                .then(CommandManager.argument("exhaustion", FloatArgumentType.floatArg())
+                                        .executes(context -> setExhaustion(
+                                                context.getSource(),
+                                                FloatArgumentType.getFloat(context, "exhaustion"))
+                                        )
+                                )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("exhaustion", FloatArgumentType.floatArg())
                                                 .executes(context -> setExhaustion(
@@ -101,6 +125,12 @@ public class HungerCommand {
                                 )
                         )
                         .then(CommandManager.literal("saturation")
+                                .then(CommandManager.argument("saturation", FloatArgumentType.floatArg())
+                                        .executes(context -> setSaturation(
+                                                context.getSource(),
+                                                FloatArgumentType.getFloat(context, "saturation"))
+                                        )
+                                )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("saturation", FloatArgumentType.floatArg())
                                                 .executes(context -> setSaturation(
@@ -109,6 +139,12 @@ public class HungerCommand {
                                                         FloatArgumentType.getFloat(context, "saturation"))
                                                 )
                                         )
+                                )
+                        )
+                        .then(CommandManager.argument("food", IntegerArgumentType.integer())
+                                .executes(context -> addFood(
+                                        context.getSource(),
+                                        IntegerArgumentType.getInteger(context, "food"))
                                 )
                         )
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
@@ -129,6 +165,7 @@ public class HungerCommand {
                                                 EntityArgumentType.getPlayer(context, "target"))
                                         )
                                 )
+                                .executes(context -> queryFood(context.getSource()))
                         )
                         .then(CommandManager.literal("exhaustion")
                                 .then(CommandManager.argument("target", EntityArgumentType.player())
@@ -137,6 +174,7 @@ public class HungerCommand {
                                                 EntityArgumentType.getPlayer(context, "target"))
                                         )
                                 )
+                                .executes(context -> queryExhaustion(context.getSource()))
                         )
                         .then(CommandManager.literal("saturation")
                                 .then(CommandManager.argument("target", EntityArgumentType.player())
@@ -145,6 +183,7 @@ public class HungerCommand {
                                                 EntityArgumentType.getPlayer(context, "target"))
                                         )
                                 )
+                                .executes(context -> querySaturation(context.getSource()))
                         )
                         .executes(context -> queryFood(context.getSource()))
                 )
