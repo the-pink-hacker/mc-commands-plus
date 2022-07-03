@@ -26,6 +26,10 @@ public class SetOwnerCommand {
                                         EntityArgumentType.getPlayer(context, "player"))
                                 )
                         )
+                        .executes(context -> setOwner(
+                                context.getSource(),
+                                EntityArgumentType.getEntities(context, "pets"))
+                        )
                 )
         );
 
@@ -51,5 +55,9 @@ public class SetOwnerCommand {
         }
 
         return i;
+    }
+
+    private static int setOwner(ServerCommandSource source, Collection<? extends Entity> entities) throws CommandSyntaxException {
+        return setOwner(source, entities, source.getPlayer());
     }
 }
