@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.server.command.CommandManager;
@@ -16,7 +17,7 @@ import java.util.Collection;
 
 public class HungerCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("hunger")
+        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("hunger")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.literal("food")
@@ -115,6 +116,8 @@ public class HungerCommand {
                         )
                 )
         );
+
+        dispatcher.register(CommandManager.literal("food").redirect(node));
     }
 
     private static int setFood(ServerCommandSource source, Collection<ServerPlayerEntity> players, int food) throws CommandSyntaxException {
