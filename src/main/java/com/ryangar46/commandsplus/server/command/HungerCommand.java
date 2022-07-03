@@ -13,13 +13,21 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class HungerCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("hunger")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")
+                        .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
+                                .executes(context -> setFood(
+                                        context.getSource(),
+                                        IntegerArgumentType.getInteger(context, "food"))
+                                )
+                        )
                         .then(CommandManager.literal("food")
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
@@ -53,8 +61,23 @@ public class HungerCommand {
                                         )
                                 )
                         )
+                        .then(CommandManager.argument("targets", EntityArgumentType.players())
+                                .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
+                                        .executes(context -> setFood(
+                                                context.getSource(),
+                                                EntityArgumentType.getPlayers(context, "targets"),
+                                                IntegerArgumentType.getInteger(context, "food"))
+                                        )
+                                )
+                        )
                 )
                 .then(CommandManager.literal("add")
+                        .then(CommandManager.argument("food", IntegerArgumentType.integer())
+                                .executes(context -> addFood(
+                                        context.getSource(),
+                                        IntegerArgumentType.getInteger(context, "food"))
+                                )
+                        )
                         .then(CommandManager.literal("food")
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then(CommandManager.argument("food", IntegerArgumentType.integer())
@@ -88,6 +111,15 @@ public class HungerCommand {
                                         )
                                 )
                         )
+                        .then(CommandManager.argument("targets", EntityArgumentType.players())
+                                .then(CommandManager.argument("food", IntegerArgumentType.integer())
+                                        .executes(context -> addFood(
+                                                context.getSource(),
+                                                EntityArgumentType.getPlayers(context, "targets"),
+                                                IntegerArgumentType.getInteger(context, "food"))
+                                        )
+                                )
+                        )
                 )
                 .then(CommandManager.literal("query")
                         .then(CommandManager.literal("food")
@@ -114,6 +146,7 @@ public class HungerCommand {
                                         )
                                 )
                         )
+                        .executes(context -> queryFood(context.getSource()))
                 )
         );
 
@@ -137,6 +170,13 @@ public class HungerCommand {
         return i;
     }
 
+    private static int setFood(ServerCommandSource source, int food) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = new ArrayList<>();
+        players.add(source.getPlayer());
+
+        return setFood(source, players, food);
+    }
+
     private static int setExhaustion(ServerCommandSource source, Collection<ServerPlayerEntity> players, float exhaustion) throws CommandSyntaxException {
         int i = 0;
 
@@ -154,6 +194,13 @@ public class HungerCommand {
         return i;
     }
 
+    private static int setExhaustion(ServerCommandSource source, float exhaustion) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = new ArrayList<>();
+        players.add(source.getPlayer());
+
+        return setExhaustion(source, players, exhaustion);
+    }
+
     private static int setSaturation(ServerCommandSource source, Collection<ServerPlayerEntity> players, float saturation) throws CommandSyntaxException {
         int i = 0;
 
@@ -169,6 +216,13 @@ public class HungerCommand {
         }
 
         return i;
+    }
+
+    private static int setSaturation(ServerCommandSource source, float saturation) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = new ArrayList<>();
+        players.add(source.getPlayer());
+
+        return setSaturation(source, players, saturation);
     }
 
     private static int addFood(ServerCommandSource source, Collection<ServerPlayerEntity> players, int food) throws CommandSyntaxException {
@@ -189,6 +243,13 @@ public class HungerCommand {
         return i;
     }
 
+    private static int addFood(ServerCommandSource source, int food) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = new ArrayList<>();
+        players.add(source.getPlayer());
+
+        return addFood(source, players, food);
+    }
+
     private static int addExhaustion(ServerCommandSource source, Collection<ServerPlayerEntity> players, float exhaustion) throws CommandSyntaxException {
         int i = 0;
 
@@ -205,6 +266,13 @@ public class HungerCommand {
         }
 
         return i;
+    }
+
+    private static int addExhaustion(ServerCommandSource source, float exhaustion) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = new ArrayList<>();
+        players.add(source.getPlayer());
+
+        return addExhaustion(source, players, exhaustion);
     }
 
     private static int addSaturation(ServerCommandSource source, Collection<ServerPlayerEntity> players, float saturation) throws CommandSyntaxException {
@@ -225,10 +293,21 @@ public class HungerCommand {
         return i;
     }
 
+    private static int addSaturation(ServerCommandSource source, float saturation) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = new ArrayList<>();
+        players.add(source.getPlayer());
+
+        return addSaturation(source, players, saturation);
+    }
+
     private static int queryFood(ServerCommandSource source, ServerPlayerEntity player) {
         int hunger = player.getHungerManager().getFoodLevel();
         source.sendFeedback(Text.translatable("command.hunger.query.food.success", hunger), false);
         return hunger > 0 ? 1 : 0;
+    }
+
+    private static int queryFood(ServerCommandSource source) {
+        return queryFood(source, Objects.requireNonNull(source.getPlayer()));
     }
 
     private static int queryExhaustion(ServerCommandSource source, ServerPlayerEntity player) {
@@ -237,9 +316,17 @@ public class HungerCommand {
         return exhaustion > 0 ? 1 : 0;
     }
 
+    private static int queryExhaustion(ServerCommandSource source) {
+        return queryExhaustion(source, Objects.requireNonNull(source.getPlayer()));
+    }
+
     private static int querySaturation(ServerCommandSource source, ServerPlayerEntity player) {
         float saturation = player.getHungerManager().getSaturationLevel();
         source.sendFeedback(Text.translatable("command.hunger.query.saturation.success", saturation), false);
         return saturation > 0 ? 1 : 0;
+    }
+
+    private static int querySaturation(ServerCommandSource source) {
+        return querySaturation(source, Objects.requireNonNull(source.getPlayer()));
     }
 }
