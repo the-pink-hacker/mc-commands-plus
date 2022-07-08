@@ -1,4 +1,6 @@
 {
+    "argument.path.not_found": "Failed to locate path: %s",
+    "argument.path.out_of_game_directory": "Path is outside of the game directory: %s",
     "command.clearspawnpoint.fail": "Failed to clear spawnpoint",
     "command.clearspawnpoint.success": "Cleared %s players' spawnpoint",
     "command.health.add.fail": "Failed to add health",
