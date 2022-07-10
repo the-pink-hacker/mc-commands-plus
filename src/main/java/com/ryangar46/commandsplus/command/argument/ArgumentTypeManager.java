@@ -8,6 +8,15 @@ import net.minecraft.util.Identifier;
 public class ArgumentTypeManager {
     public static void register() {
         CommandsPlus.LOGGER.info("Registering argument types");
-        ArgumentTypeRegistry.registerArgumentType(new Identifier(CommandsPlus.MOD_ID, "path"), PathArgumentType.class, ConstantArgumentSerializer.of(PathArgumentType::path));
+        ArgumentTypeRegistry.registerArgumentType(
+                new Identifier(CommandsPlus.MOD_ID, "gamerule_preset"),
+                GameRulePresetArgumentType.class,
+                ConstantArgumentSerializer.of(GameRulePresetArgumentType::preset)
+        );
+        ArgumentTypeRegistry.registerArgumentType(
+                new Identifier(CommandsPlus.MOD_ID, "path"),
+                PathArgumentType.class,
+                ConstantArgumentSerializer.of(PathArgumentType::path)
+        );
     }
 }
