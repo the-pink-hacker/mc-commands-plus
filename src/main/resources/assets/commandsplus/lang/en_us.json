@@ -1,7 +1,9 @@
 {
     "command.clearspawnpoint.fail": "Failed to clear spawnpoint",
     "command.clearspawnpoint.success": "Cleared %s players' spawnpoint",
+    "command.gamerulepreset.load.change": "Changed gamerule %s: %s -> %s",
     "command.gamerulepreset.load.fail": "Failed to load gamerule preset: %s",
+    "command.gamerulepreset.load.no_change": "No gamerules were changed by: %s",
     "command.gamerulepreset.load.success": "Loaded gamerule preset: %s",
     "command.gamerulepreset.save.success": "Saved gamerule preset: %s",
     "command.health.add.fail": "Failed to add health",

@@ -3,7 +3,9 @@ package com.ryangar46.commandsplus.world;
 import com.google.gson.*;
 import com.ryangar46.commandsplus.CommandsPlus;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
@@ -13,7 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
+// TODO: Add the ability to save and load presets from world creation
 public class GameRulePreset {
     public static final Path GAMERULE_PRESET_PATH = Path.of(FabricLoader.getInstance().getGameDir().toString(), CommandsPlus.MOD_ID, "gamerulepresets");
 
@@ -42,8 +46,10 @@ public class GameRulePreset {
         }
     }
 
-    public static boolean load(Path path, ServerWorld world) {
-        if (!Files.exists(path)) return false;
+    public static int load(Path path, ServerCommandSource source) {
+        AtomicInteger i = new AtomicInteger();
+
+        if (!Files.exists(path)) return i.get();
 
         Gson gson = new Gson();
 
@@ -61,6 +67,7 @@ public class GameRulePreset {
             JsonElement element = root.get("gamerules");
 
             if (element instanceof JsonObject presetRules) {
+                ServerWorld world = source.getWorld();
                 Map<GameRules.Key<?>, GameRules.Rule<?>> rules = world.getGameRules().rules;
 
                 rules.forEach(((ruleKey, rule) -> {
@@ -71,22 +78,37 @@ public class GameRulePreset {
 
                         if (Objects.equals(ruleName, jsonKey)) {
                             JsonElement jsonValue = entry.getValue();
+
                             if (jsonValue instanceof JsonPrimitive primitive) {
                                 if (primitive.isBoolean()) {
                                     boolean value = primitive.getAsBoolean();
-                                    if (rule instanceof GameRules.BooleanRule booleanRule) booleanRule.set(value, world.getServer());
+
+                                    if (rule instanceof GameRules.BooleanRule booleanRule) {
+                                        if (booleanRule.get() != value) {
+                                            source.sendFeedback(Text.translatable("command.gamerulepreset.load.change", ruleName, booleanRule.get(), value), true);
+                                            booleanRule.set(value, world.getServer());
+                                            i.getAndIncrement();
+                                        }
+                                    }
                                 } else if (primitive.isNumber()) {
                                     int value = primitive.getAsInt();
-                                    if (rule instanceof GameRules.IntRule intRule) intRule.set(value, world.getServer());
+
+                                    if (rule instanceof GameRules.IntRule intRule) {
+                                        if (intRule.get() != value) {
+                                            source.sendFeedback(Text.translatable("command.gamerulepreset.load.change", ruleName, intRule.get(), value), true);
+                                            intRule.set(value, world.getServer());
+                                            i.getAndIncrement();
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }));
             }
-        }
+        } else return -1;
 
-        return true;
+        return i.get();
     }
 
     private static void createDirectory(Path path) {

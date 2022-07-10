@@ -3,6 +3,7 @@ package com.ryangar46.commandsplus.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import com.ryangar46.commandsplus.CommandsPlus;
 import com.ryangar46.commandsplus.command.argument.GameRulePresetArgumentType;
 import com.ryangar46.commandsplus.world.GameRulePreset;
 import net.minecraft.server.command.CommandManager;
@@ -43,13 +44,18 @@ public class GameRulePresetCommand {
         return 1;
     }
 
-    // TODO: List what rules were changed
     private static int load(ServerCommandSource source, Path path) throws CommandSyntaxException {
-        if (GameRulePreset.load(path, source.getWorld())) {
+        int i = GameRulePreset.load(path, source);
+
+        if (i > 1) {
             source.sendFeedback(Text.translatable("command.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
-            return 1;
+            return i;
+        } else if (i == 0) {
+            source.sendFeedback(Text.translatable("command.gamerulepreset.load.no_change", FilenameUtils.getBaseName(path.toString())), true);
+            return i;
         }
 
+        CommandsPlus.LOGGER.info(i);
         throw FAILED_TO_LOAD_EXCEPTION.create(FilenameUtils.getBaseName(path.toString()));
     }
 }
