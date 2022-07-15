@@ -18,8 +18,8 @@ public class GameRulePresetCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("gamerulepreset")
-                .requires(source -> source.hasPermissionLevel(4))
                 .then(CommandManager.literal("save")
+                        .requires(source -> source.hasPermissionLevel(4))
                         .then(CommandManager.argument("preset", GameRulePresetArgumentType.preset())
                                 .executes(context -> save(
                                         context.getSource(),
@@ -28,6 +28,7 @@ public class GameRulePresetCommand {
                         )
                 )
                 .then(CommandManager.literal("load")
+                        .requires(source -> source.hasPermissionLevel(2))
                         .then(CommandManager.argument("preset", GameRulePresetArgumentType.preset())
                                 .executes(context -> load(
                                         context.getSource(),
