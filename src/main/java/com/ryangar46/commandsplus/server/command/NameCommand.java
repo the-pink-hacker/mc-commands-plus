@@ -65,9 +65,9 @@ public class NameCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.name.item.success", name), false);
+            source.sendFeedback(Text.translatable("commands.name.item.success", name), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.name.item.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.name.item.fail")).create();
         }
 
         return i;
@@ -85,9 +85,9 @@ public class NameCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.name.entity.success", name), false);
+            source.sendFeedback(Text.translatable("commands.name.entity.success", name), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.name.entity.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.name.entity.fail")).create();
         }
 
         return i;
