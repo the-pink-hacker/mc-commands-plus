@@ -4,12 +4,16 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.command.argument.MessageArgumentType;
+import net.minecraft.network.message.MessageSender;
+import net.minecraft.network.message.MessageType;
+import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-// TODO: Message all players on the server that it will close
 public class CPStopCommand {
     private static volatile int timeLeft;
     private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("commands.cpstop.cancel.fail"));
@@ -18,7 +22,7 @@ public class CPStopCommand {
         dispatcher.register(CommandManager.literal("cpstop")
                 .requires(source -> source.hasPermissionLevel(4))
                 .then(CommandManager.literal("cancel")
-                        .executes(context -> cancel(context.getSource()))
+                        .executes(context -> cancel())
                 )
                 .then(CommandManager.argument("time", IntegerArgumentType.integer(0))
                         .executes(context -> stopServer(
@@ -38,22 +42,28 @@ public class CPStopCommand {
 
         if (seconds > 0) {
             Thread thread = new Thread(() -> {
+                final PlayerManager playerManager = server.getPlayerManager();
                 timeLeft = seconds;
 
                 for (int i = 0; i < seconds; i++) {
-                    if (timeLeft ==  -1) return;
+                    // Cancel
+                    if (timeLeft == -1) {
+                        sendServerMessage(playerManager, Text.translatable("commands.cpstop.cancel.success"));
+                        return;
+                    }
+
                     timeLeft = seconds - i;
 
-                    source.sendFeedback(Text.translatable("commands.cpstop.time", timeLeft), true);
+                    if (timeLeft <= 10 || timeLeft % 10 == 0) sendServerMessage(playerManager, Text.translatable("commands.cpstop.time", timeLeft));
 
                     try {
-                        Thread.sleep(seconds * 100L);
+                        Thread.sleep(1000L);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
 
-                source.sendFeedback(Text.translatable("commands.cpstop.stop", seconds), true);
+                sendServerMessage(playerManager, Text.translatable("commands.cpstop.stop", seconds));
                 server.stop(false);
             }, "Server stop thread");
 
@@ -66,14 +76,16 @@ public class CPStopCommand {
         return 1;
     }
 
-    private static int cancel(ServerCommandSource source) throws CommandSyntaxException {
+    private static int cancel() throws CommandSyntaxException {
         if (timeLeft > 0) {
             timeLeft = -1;
-            source.sendFeedback(Text.translatable("commands.cpstop.cancel.success"), true);
-
             return 1;
         }
 
         throw FAILED_CANCEL.create();
+    }
+
+    private static void sendServerMessage(PlayerManager playerManager, Text text) {
+        playerManager.broadcast(SignedMessage.of(text), MessageSender.of(Text.of("Server")), MessageType.SYSTEM);
     }
 }
