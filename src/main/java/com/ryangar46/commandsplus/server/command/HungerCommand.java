@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.ryangar46.commandsplus.util.command.AliasUtils;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.server.command.CommandManager;
@@ -189,7 +190,7 @@ public class HungerCommand {
                 )
         );
 
-        dispatcher.register(CommandManager.literal("food").redirect(node));
+        AliasUtils.createAlias(dispatcher, node, "food");
     }
 
     private static int setFood(ServerCommandSource source, Collection<ServerPlayerEntity> players, int food) throws CommandSyntaxException {

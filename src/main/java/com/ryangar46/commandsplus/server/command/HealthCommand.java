@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.ryangar46.commandsplus.util.command.AliasUtils;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -64,7 +65,7 @@ public class HealthCommand {
                 )
         );
 
-        dispatcher.register(CommandManager.literal("hp").redirect(node));
+        AliasUtils.createAlias(dispatcher, node, "hp");
     }
 
     private static int setHealth(ServerCommandSource source, Collection<? extends Entity> entities, float health) throws CommandSyntaxException {

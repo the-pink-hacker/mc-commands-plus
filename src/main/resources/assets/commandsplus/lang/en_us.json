@@ -6,6 +6,7 @@
     "commands.cpstop.immediate": "Stopped server immediately",
     "commands.cpstop.stop": "Stopped server",
     "commands.cpstop.time": "Stopping server in %s seconds...",
+    "commands.daylock.success": "Set gamerule doDaylightCycle to %s",
     "commands.gamerulepreset.load.change": "Changed gamerule %s: %s -> %s",
     "commands.gamerulepreset.load.fail": "Failed to load gamerule preset: %s",
     "commands.gamerulepreset.load.noChange": "No gamerules were changed by: %s",

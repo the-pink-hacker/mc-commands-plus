@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.ryangar46.commandsplus.util.command.AliasUtils;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -64,7 +65,7 @@ public class HeadCommand {
                 )
         );
 
-        dispatcher.register(CommandManager.literal("skull").redirect(node));
+        AliasUtils.createAlias(dispatcher, node, "skull");
     }
 
     private static int give(ServerCommandSource source, Collection<ServerPlayerEntity> targets, Collection<GameProfile> profiles) throws CommandSyntaxException {
