@@ -28,6 +28,7 @@ public class CommandsPlus implements ModInitializer {
             NameCommand.register(dispatcher);
             RideCommand.register(dispatcher);
             SetOwnerCommand.register(dispatcher);
+            ToggleDownfallCommand.register(dispatcher);
 
             // Dedicated server
             if (environment.dedicated) {
