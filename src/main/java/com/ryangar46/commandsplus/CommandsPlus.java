@@ -4,6 +4,7 @@ import com.ryangar46.commandsplus.command.argument.ArgumentTypeManager;
 import com.ryangar46.commandsplus.server.command.*;
 import com.ryangar46.commandsplus.server.dedicated.command.CPStopCommand;
 import com.ryangar46.commandsplus.util.command.AliasUtils;
+import com.ryangar46.commandsplus.world.GameRuleManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,7 @@ public class CommandsPlus implements ModInitializer {
     @Override
     public void onInitialize() {
         ArgumentTypeManager.register();
+        GameRuleManager.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             // Commands

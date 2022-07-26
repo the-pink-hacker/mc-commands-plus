@@ -56,5 +56,7 @@
     "commands.ride.summon_rider.success": "Summoned a %s and mounted to the target",
     "commands.setowner.fail": "Failed to set pet's owner",
     "commands.setowner.success": "Set pet's owner to %s",
-    "commands.toggledownfall.success": "Toggled downfall"
+    "commands.toggledownfall.success": "Toggled downfall",
+    "gamerule.itemDespawnAge": "Item Despawn Age",
+    "gamerule.itemDespawnAge.description": "Controls how long it takes for an item to despawn"
 }
