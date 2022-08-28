@@ -2,8 +2,12 @@ package com.ryangar46.commandsplus.server.dedicated.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.network.message.DecoratedContents;
+import net.minecraft.network.message.MessageType;
+import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
@@ -44,13 +48,13 @@ public class CPStopCommand {
                 for (int i = 0; i < seconds; i++) {
                     // Cancel
                     if (timeLeft == -1) {
-                        sendServerMessage(playerManager, Text.translatable("commands.cpstop.cancel.success"));
+                        sendServerMessage(playerManager, source, Text.translatable("commands.cpstop.cancel.success"));
                         return;
                     }
 
                     timeLeft = seconds - i;
 
-                    if (timeLeft <= 10 || timeLeft % 10 == 0) sendServerMessage(playerManager, Text.translatable("commands.cpstop.time", timeLeft));
+                    if (timeLeft <= 10 || timeLeft % 10 == 0) sendServerMessage(playerManager, source, Text.translatable("commands.cpstop.time", timeLeft));
 
                     try {
                         Thread.sleep(1000L);
@@ -59,7 +63,7 @@ public class CPStopCommand {
                     }
                 }
 
-                sendServerMessage(playerManager, Text.translatable("commands.cpstop.stop", seconds));
+                sendServerMessage(playerManager, source, Text.translatable("commands.cpstop.stop", seconds));
                 server.stop(false);
             }, "Server stop thread");
 
@@ -81,8 +85,8 @@ public class CPStopCommand {
         throw FAILED_CANCEL.create();
     }
 
-    private static void sendServerMessage(PlayerManager playerManager, Text text) {
-        // Todo: Fix stop broadcast for 1.19.2
-        //playerManager.broadcast(SignedMessage.of(text), MessageSender.of(Text.of("Server")), MessageType.SYSTEM);
+    private static void sendServerMessage(PlayerManager playerManager, ServerCommandSource source, Text text) {
+        // Todo: Make secure
+        playerManager.broadcast(SignedMessage.ofUnsigned(new DecoratedContents(text.toString(), text)), source, MessageType.params(MessageType.CHAT, source));
     }
 }
