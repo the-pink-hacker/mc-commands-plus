@@ -4,9 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.minecraft.network.message.MessageSender;
-import net.minecraft.network.message.MessageType;
-import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
@@ -85,6 +82,7 @@ public class CPStopCommand {
     }
 
     private static void sendServerMessage(PlayerManager playerManager, Text text) {
-        playerManager.broadcast(SignedMessage.of(text), MessageSender.of(Text.of("Server")), MessageType.SYSTEM);
+        // Todo: Fix stop broadcast for 1.19.2
+        //playerManager.broadcast(SignedMessage.of(text), MessageSender.of(Text.of("Server")), MessageType.SYSTEM);
     }
 }
