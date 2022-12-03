@@ -6,14 +6,17 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.ryangar46.commandsplus.command.argument.TeleportRuleArgumentType;
 import com.ryangar46.commandsplus.util.command.AliasUtils;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.EntitySummonArgumentType;
+import net.minecraft.command.argument.RegistryEntryArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
@@ -31,7 +34,7 @@ public class RideCommand {
     private static final SimpleCommandExceptionType SUMMON_RIDE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.summon_ride.fail"));
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.summon.failed.uuid"));
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         /*
          * Todo: Add optional fields from bedrock edition
          *  - nameTag
@@ -70,22 +73,22 @@ public class RideCommand {
                                 ))
                         )
                         .then(CommandManager.literal("summon_rider")
-                                .then(CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
+                                .then(CommandManager.argument("entity", RegistryEntryArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
                                         .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                                         .executes(context -> summonRider(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntity(context, "riders"),
-                                                EntitySummonArgumentType.getEntitySummon(context, "entity")
+                                                RegistryEntryArgumentType.getSummonableEntityType(context, "entity")
                                         ))
                                 )
                         )
                         .then(CommandManager.literal("summon_ride")
-                                .then(CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
+                                .then(CommandManager.argument("entity", RegistryEntryArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
                                         .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                                         .executes(context -> summonRide(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntity(context, "riders"),
-                                                EntitySummonArgumentType.getEntitySummon(context, "entity")
+                                                RegistryEntryArgumentType.getSummonableEntityType(context, "entity")
                                         ))
                                 )
                         )
@@ -195,11 +198,11 @@ public class RideCommand {
     private static int summonRider(
             ServerCommandSource source,
             Entity ride,
-            Identifier id
+            RegistryEntry.Reference<EntityType<?>> entityType
     ) throws CommandSyntaxException {
         if (!ride.hasPassengers()) {
             NbtCompound nbt = new NbtCompound();
-            nbt.putString("id", id.toString());
+            nbt.putString("id", entityType.registryKey().getValue().toString());
 
             ServerWorld world = source.getWorld();
 
@@ -234,10 +237,10 @@ public class RideCommand {
     private static int summonRide(
             ServerCommandSource source,
             Entity rider,
-            Identifier id
+            RegistryEntry.Reference<EntityType<?>> entityType
     ) throws CommandSyntaxException {
         NbtCompound nbt = new NbtCompound();
-        nbt.putString("id", id.toString());
+        nbt.putString("id", entityType.registryKey().getValue().toString());
 
         ServerWorld world = source.getWorld();
 

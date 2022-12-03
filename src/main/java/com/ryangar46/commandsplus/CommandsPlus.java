@@ -28,7 +28,7 @@ public class CommandsPlus implements ModInitializer {
             HealthCommand.register(dispatcher);
             HungerCommand.register(dispatcher);
             NameCommand.register(dispatcher);
-            RideCommand.register(dispatcher);
+            RideCommand.register(dispatcher, registryAccess);
             SetOwnerCommand.register(dispatcher);
             ToggleDownfallCommand.register(dispatcher);
 
