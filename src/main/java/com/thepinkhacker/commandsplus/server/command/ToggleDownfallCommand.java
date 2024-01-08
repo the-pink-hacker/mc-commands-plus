@@ -19,7 +19,7 @@ public class ToggleDownfallCommand {
 
         world.setWeather(0, 0, !world.isRaining() && !world.isThundering(), false);
 
-        source.sendFeedback(Text.translatable("commands.toggledownfall.success"), true);
+        source.sendFeedback(() -> Text.translatable("commands.toggledownfall.success"), true);
 
         return 1;
     }

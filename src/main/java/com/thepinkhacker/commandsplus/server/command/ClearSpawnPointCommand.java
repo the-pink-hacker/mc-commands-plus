@@ -36,7 +36,7 @@ public class ClearSpawnPointCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("commands.clearspawnpoint.success", i), true);
+            source.sendFeedback(() -> Text.translatable("commands.clearspawnpoint.success", i), true);
         } else {
             throw new SimpleCommandExceptionType(Text.translatable("commands.clearspawnpoint.fail")).create();
         }
