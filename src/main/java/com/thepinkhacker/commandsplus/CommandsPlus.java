@@ -23,7 +23,6 @@ public class CommandsPlus implements ModInitializer {
             // Commands
             ClearSpawnPointCommand.register(dispatcher);
             DayLockCommand.register(dispatcher);
-            SignCommand.register(dispatcher);
             GameRulePresetCommand.register(dispatcher);
             HeadCommand.register(dispatcher);
             HealthCommand.register(dispatcher);
