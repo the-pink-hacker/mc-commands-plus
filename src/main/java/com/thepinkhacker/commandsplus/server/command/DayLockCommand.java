@@ -4,13 +4,16 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.thepinkhacker.commandsplus.util.command.AliasUtils;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.world.GameRules;
 
-public class DayLockCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+public class DayLockCommand implements CommandRegistrationCallback {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("daylock")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("lock", BoolArgumentType.bool())

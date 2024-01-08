@@ -1,12 +1,17 @@
 package com.thepinkhacker.commandsplus;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.thepinkhacker.commandsplus.command.argument.ArgumentTypeManager;
 import com.thepinkhacker.commandsplus.server.command.*;
 import com.thepinkhacker.commandsplus.server.dedicated.command.CPStopCommand;
+import com.thepinkhacker.commandsplus.server.dedicated.command.CommandRegistrationCallbackDedicated;
 import com.thepinkhacker.commandsplus.util.command.AliasUtils;
 import com.thepinkhacker.commandsplus.world.GameRuleManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,28 +25,49 @@ public class CommandsPlus implements ModInitializer {
         GameRuleManager.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            // Commands
-            ClearSpawnPointCommand.register(dispatcher);
-            DayLockCommand.register(dispatcher);
-            GameRulePresetCommand.register(dispatcher);
-            HeadCommand.register(dispatcher);
-            HealthCommand.register(dispatcher);
-            HungerCommand.register(dispatcher);
-            NameCommand.register(dispatcher);
-            RideCommand.register(dispatcher, registryAccess);
-            SetOwnerCommand.register(dispatcher);
-            ToggleDownfallCommand.register(dispatcher);
-
-            // Dedicated server
-            if (environment.dedicated) {
-                CPStopCommand.register(dispatcher);
-            }
+            registerCommands(
+                    dispatcher,
+                    registryAccess,
+                    environment,
+                    new CommandRegistrationCallback[] {
+                            new ClearSpawnPointCommand(),
+                            new DayLockCommand(),
+                            new GameRulePresetCommand(),
+                            new HeadCommand(),
+                            new HealthCommand(),
+                            new HungerCommand(),
+                            new NameCommand(),
+                            new RideCommand(),
+                            new SetOwnerCommand(),
+                            new ToggleDownfallCommand(),
+                            new CPStopCommand(),
+                    }
+            );
 
             // Aliases
             AliasUtils.createAlias(dispatcher, "gamemode", "gm");
             AliasUtils.createAlias(dispatcher, "help", "?");
 
-            LOGGER.info("Registered commands");
+            LOGGER.info("Registered commands+.");
         });
+    }
+
+    private static void registerCommands(
+            CommandDispatcher<net.minecraft.server.command.ServerCommandSource> dispatcher,
+            CommandRegistryAccess registryAccess,
+            CommandManager.RegistrationEnvironment environment,
+            CommandRegistrationCallback[] commands
+    ) {
+        for (CommandRegistrationCallback command : commands) {
+            if (command instanceof CommandRegistrationCallbackDedicated) {
+                if (environment.dedicated) command.register(dispatcher, registryAccess, environment);
+            } else {
+                command.register(dispatcher, registryAccess, environment);
+            }
+        }
+    }
+
+    public static Identifier identifier(String id) {
+        return new Identifier(MOD_ID, id);
     }
 }

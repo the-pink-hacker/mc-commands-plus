@@ -6,7 +6,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.thepinkhacker.commandsplus.util.command.AliasUtils;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.entity.SkullBlockEntity;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
@@ -27,10 +29,11 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class HeadCommand {
+public class HeadCommand implements CommandRegistrationCallback {
     private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.head.give.fail"));
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("head")
                 .then(CommandManager.literal("give")
                         .requires(source -> source.hasPermissionLevel(2))

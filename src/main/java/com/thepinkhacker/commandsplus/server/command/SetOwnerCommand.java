@@ -5,6 +5,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.thepinkhacker.commandsplus.util.command.AliasUtils;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -15,8 +17,9 @@ import net.minecraft.text.Text;
 
 import java.util.Collection;
 
-public class SetOwnerCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+public class SetOwnerCommand implements CommandRegistrationCallback {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("setowner")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("pets", EntityArgumentType.entities())

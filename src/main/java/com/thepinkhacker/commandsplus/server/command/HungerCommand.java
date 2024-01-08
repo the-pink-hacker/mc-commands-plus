@@ -7,6 +7,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.thepinkhacker.commandsplus.util.command.AliasUtils;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.server.command.CommandManager;
@@ -18,8 +20,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public class HungerCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+public class HungerCommand implements CommandRegistrationCallback {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("hunger")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")

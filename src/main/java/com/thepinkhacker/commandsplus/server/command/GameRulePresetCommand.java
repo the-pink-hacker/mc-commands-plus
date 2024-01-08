@@ -6,6 +6,8 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.thepinkhacker.commandsplus.CommandsPlus;
 import com.thepinkhacker.commandsplus.command.argument.GameRulePresetArgumentType;
 import com.thepinkhacker.commandsplus.world.GameRulePreset;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
@@ -13,10 +15,11 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.nio.file.Path;
 
-public class GameRulePresetCommand {
+public class GameRulePresetCommand implements CommandRegistrationCallback {
     private static final DynamicCommandExceptionType FAILED_TO_LOAD_EXCEPTION = new DynamicCommandExceptionType(preset -> Text.translatable("commands.gamerulepreset.load.fail", preset));
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(CommandManager.literal("gamerulepreset")
                 .then(CommandManager.literal("save")
                         .requires(source -> source.hasPermissionLevel(4))
