@@ -122,9 +122,10 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(() -> Text.translatable("commands.ride.start_riding.success.multiple", i), false);
+            int finalI = i;
+            source.sendFeedback(() -> Text.translatable("commands.ride.start_riding.success.multiple", finalI), false);
         } else if (i == 1) {
-            source.sendFeedback(() -> Text.translatable("commands.ride.start_riding.success.single", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.start_riding.success.single"), false);
         } else {
             throw START_RIDING_FAILED.create();
         }
@@ -157,9 +158,10 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(() -> Text.translatable("commands.ride.stop_riding.success.multiple", i), false);
+            int finalI = i;
+            source.sendFeedback(() -> Text.translatable("commands.ride.stop_riding.success.multiple", finalI), false);
         } else if (i == 1) {
-            source.sendFeedback(() -> Text.translatable("commands.ride.stop_riding.success.single", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.stop_riding.success.single"), false);
         } else {
             throw STOP_RIDING_FAILED.create();
         }
@@ -182,9 +184,10 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(() -> Text.translatable("commands.ride.evict_riders.success.multiple", i), false);
+            int finalI = i;
+            source.sendFeedback(() -> Text.translatable("commands.ride.evict_riders.success.multiple", finalI), false);
         } else if (i == 1) {
-            source.sendFeedback(() -> Text.translatable("commands.ride.evict_riders.success.single", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.evict_riders.success.single"), false);
         } else {
             throw EVICT_RIDERS_FAILED.create();
         }
