@@ -1,6 +1,11 @@
 {
     "command.clearspawnpoint.fail": "Failed to clear spawnpoint",
     "command.clearspawnpoint.success": "Cleared %s players' spawnpoint",
+    "command.cpstop.cancel.fail": "Failed to canceled server stop",
+    "command.cpstop.cancel.success": "Canceled server stop",
+    "command.cpstop.immediate": "Stopped server immediately",
+    "command.cpstop.stop": "Stopped server",
+    "command.cpstop.time": "Stopping server in %s seconds...",
     "command.gamerulepreset.load.change": "Changed gamerule %s: %s -> %s",
     "command.gamerulepreset.load.fail": "Failed to load gamerule preset: %s",
     "command.gamerulepreset.load.no_change": "No gamerules were changed by: %s",
