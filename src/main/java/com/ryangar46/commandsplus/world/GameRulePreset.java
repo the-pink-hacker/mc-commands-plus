@@ -42,8 +42,8 @@ public class GameRulePreset {
         }
     }
 
-    public static void load(Path path, ServerWorld world) {
-        if (!Files.exists(path)) return;
+    public static boolean load(Path path, ServerWorld world) {
+        if (!Files.exists(path)) return false;
 
         Gson gson = new Gson();
 
@@ -85,6 +85,8 @@ public class GameRulePreset {
                 }));
             }
         }
+
+        return true;
     }
 
     private static void createDirectory(Path path) {

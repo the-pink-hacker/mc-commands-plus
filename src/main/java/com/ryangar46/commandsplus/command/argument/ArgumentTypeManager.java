@@ -13,10 +13,5 @@ public class ArgumentTypeManager {
                 GameRulePresetArgumentType.class,
                 ConstantArgumentSerializer.of(GameRulePresetArgumentType::preset)
         );
-        ArgumentTypeRegistry.registerArgumentType(
-                new Identifier(CommandsPlus.MOD_ID, "path"),
-                PathArgumentType.class,
-                ConstantArgumentSerializer.of(PathArgumentType::path)
-        );
     }
 }
