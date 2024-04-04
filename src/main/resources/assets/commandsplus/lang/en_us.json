@@ -55,5 +55,6 @@
     "commands.ride.summon_rider.fail": "Failed to summon the rider",
     "commands.ride.summon_rider.success": "Summoned a %s and mounted to the target",
     "commands.setowner.fail": "Failed to set pet's owner",
-    "commands.setowner.success": "Set pet's owner to %s"
+    "commands.setowner.success": "Set pet's owner to %s",
+    "commands.toggledownfall.success": "Toggled downfall"
 }
