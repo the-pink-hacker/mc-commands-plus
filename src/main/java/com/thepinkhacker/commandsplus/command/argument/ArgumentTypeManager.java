@@ -9,12 +9,12 @@ public class ArgumentTypeManager {
     public static void register() {
         CommandsPlus.LOGGER.info("Registering argument types");
         ArgumentTypeRegistry.registerArgumentType(
-                new Identifier(CommandsPlus.MOD_ID, "gamerule_preset"),
+                CommandsPlus.identifier("gamerule_preset"),
                 GameRulePresetArgumentType.class,
                 ConstantArgumentSerializer.of(GameRulePresetArgumentType::preset)
         );
         ArgumentTypeRegistry.registerArgumentType(
-                new Identifier(CommandsPlus.MOD_ID, "teleport_rule"),
+                CommandsPlus.identifier("teleport_rule"),
                 TeleportRuleArgumentType.class,
                 ConstantArgumentSerializer.of(TeleportRuleArgumentType::teleportRule)
         );

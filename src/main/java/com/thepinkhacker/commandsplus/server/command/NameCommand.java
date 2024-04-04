@@ -3,6 +3,8 @@ package com.thepinkhacker.commandsplus.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.ItemSlotArgumentType;
 import net.minecraft.command.argument.MessageArgumentType;
@@ -16,8 +18,9 @@ import net.minecraft.text.Text;
 
 import java.util.Collection;
 
-public class NameCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+public class NameCommand implements CommandRegistrationCallback {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(CommandManager.literal("name")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("item")

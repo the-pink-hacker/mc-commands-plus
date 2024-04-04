@@ -6,6 +6,7 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.thepinkhacker.commandsplus.command.argument.TeleportRuleArgumentType;
 import com.thepinkhacker.commandsplus.util.command.AliasUtils;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.RegistryEntryArgumentType;
@@ -26,7 +27,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Collection;
 
-public class RideCommand {
+public class RideCommand implements CommandRegistrationCallback {
     private static final SimpleCommandExceptionType START_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.start_riding.fail"));
     private static final SimpleCommandExceptionType STOP_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.stop_riding.fail"));
     private static final SimpleCommandExceptionType EVICT_RIDERS_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.evict_riders.fail"));
@@ -34,7 +35,8 @@ public class RideCommand {
     private static final SimpleCommandExceptionType SUMMON_RIDE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.summon_ride.fail"));
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.summon.failed.uuid"));
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
+    @Override
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         /*
          * Todo: Add optional fields from bedrock edition
          *  - nameTag
