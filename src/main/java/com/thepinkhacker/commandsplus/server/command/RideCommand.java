@@ -122,9 +122,9 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("commands.ride.start_riding.success.multiple", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.start_riding.success.multiple", i), false);
         } else if (i == 1) {
-            source.sendFeedback(Text.translatable("commands.ride.start_riding.success.single", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.start_riding.success.single", i), false);
         } else {
             throw START_RIDING_FAILED.create();
         }
@@ -157,9 +157,9 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("commands.ride.stop_riding.success.multiple", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.stop_riding.success.multiple", i), false);
         } else if (i == 1) {
-            source.sendFeedback(Text.translatable("commands.ride.stop_riding.success.single", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.stop_riding.success.single", i), false);
         } else {
             throw STOP_RIDING_FAILED.create();
         }
@@ -182,9 +182,9 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("commands.ride.evict_riders.success.multiple", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.evict_riders.success.multiple", i), false);
         } else if (i == 1) {
-            source.sendFeedback(Text.translatable("commands.ride.evict_riders.success.single", i), false);
+            source.sendFeedback(() -> Text.translatable("commands.ride.evict_riders.success.single", i), false);
         } else {
             throw EVICT_RIDERS_FAILED.create();
         }
@@ -220,7 +220,7 @@ public class RideCommand {
 
                 if (world.spawnNewEntityAndPassengers(rider)) {
                     rider.startRiding(ride);
-                    source.sendFeedback(Text.translatable("commands.ride.summon_rider.success", rider.getDisplayName()), true);
+                    source.sendFeedback(() -> Text.translatable("commands.ride.summon_rider.success", rider.getDisplayName()), true);
                     return 1;
                 } else {
                     throw FAILED_UUID_EXCEPTION.create();
@@ -258,7 +258,7 @@ public class RideCommand {
 
             if (world.spawnNewEntityAndPassengers(ride)) {
                 rider.startRiding(ride);
-                source.sendFeedback(Text.translatable("commands.ride.summon_ride.success", ride.getDisplayName()), true);
+                source.sendFeedback(() -> Text.translatable("commands.ride.summon_ride.success", ride.getDisplayName()), true);
                 return 1;
             } else {
                 throw FAILED_UUID_EXCEPTION.create();

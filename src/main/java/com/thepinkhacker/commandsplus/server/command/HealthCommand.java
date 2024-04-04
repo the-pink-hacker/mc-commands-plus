@@ -79,7 +79,7 @@ public class HealthCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("commands.health.set.success", health, i), false);
+            source.sendFeedback(() -> Text.translatable("commands.health.set.success", health, i), false);
         } else {
             throw new SimpleCommandExceptionType(Text.translatable("commands.health.set.fail")).create();
         }
@@ -105,7 +105,7 @@ public class HealthCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("commands.health.add.success", health, i), false);
+            source.sendFeedback(() -> Text.translatable("commands.health.add.success", health, i), false);
         } else {
             throw new SimpleCommandExceptionType(Text.translatable("commands.health.add.fail")).create();
         }
@@ -122,7 +122,7 @@ public class HealthCommand {
 
     private static int queryHealth(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
         if (entity instanceof LivingEntity livingEntity) {
-            source.sendFeedback(Text.translatable("commands.health.query.success", livingEntity.getHealth()), false);
+            source.sendFeedback(() -> Text.translatable("commands.health.query.success", livingEntity.getHealth()), false);
             return 1;
         }
 

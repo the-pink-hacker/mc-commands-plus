@@ -67,7 +67,7 @@ public class CPStopCommand {
 
             thread.start();
         } else {
-            source.sendFeedback(Text.translatable("commands.cpstop.immediate"), true);
+            source.sendFeedback(() -> Text.translatable("commands.cpstop.immediate"), true);
             server.stop(false);
         }
 

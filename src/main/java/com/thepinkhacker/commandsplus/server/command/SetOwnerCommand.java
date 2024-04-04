@@ -50,7 +50,7 @@ public class SetOwnerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("commands.setowner.success", player.getDisplayName()), false);
+            source.sendFeedback(() -> Text.translatable("commands.setowner.success", player.getDisplayName()), false);
         } else {
             throw new SimpleCommandExceptionType(Text.translatable("commands.setowner.fail")).create();
         }

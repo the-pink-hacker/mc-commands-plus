@@ -45,14 +45,14 @@ public class SignCommand {
         //NbtCompound nbtRoot = new NbtCompound();
 
         // Add line of text
-        //source.sendFeedback(Text.of(text.getString()), false);
+        //source.sendFeedback(() -> Text.of(text.getString()), false);
 
         ServerWorld world = source.getWorld();
 
         world.getBlockEntity(blockPosition, BlockEntityType.SIGN).ifPresent(sign -> {
             sign.setTextOnRow(line, text);
             sign.updateListeners();
-            source.sendFeedback(Text.of("hi"), false);
+            source.sendFeedback(() -> Text.of("hi"), false);
         });
 
         // Not a sign

@@ -61,52 +61,67 @@ public class GameRulePreset {
             throw new RuntimeException(e);
         }
 
-        if (data != null) {
-            JsonObject root = gson.fromJson(data, JsonObject.class);
+        if (data == null) return -1;
 
-            JsonElement element = root.get("gamerules");
+        JsonObject root = gson.fromJson(data, JsonObject.class);
+        JsonElement element = root.get("gamerules");
 
-            if (element instanceof JsonObject presetRules) {
-                ServerWorld world = source.getWorld();
-                Map<GameRules.Key<?>, GameRules.Rule<?>> rules = world.getGameRules().rules;
+        if (element instanceof JsonObject presetRules) {
+            ServerWorld world = source.getWorld();
+            Map<GameRules.Key<?>, GameRules.Rule<?>> rules = world.getGameRules().rules;
 
-                rules.forEach(((ruleKey, rule) -> {
-                    String ruleName = ruleKey.getName();
+            rules.forEach(((ruleKey, rule) -> {
+                String ruleName = ruleKey.getName();
 
-                    for (Map.Entry<String, JsonElement> entry : presetRules.entrySet()) {
-                        String jsonKey = entry.getKey();
+                for (Map.Entry<String, JsonElement> entry : presetRules.entrySet()) {
+                    String jsonKey = entry.getKey();
 
-                        if (Objects.equals(ruleName, jsonKey)) {
-                            JsonElement jsonValue = entry.getValue();
+                    if (!Objects.equals(ruleName, jsonKey)) continue;
 
-                            if (jsonValue instanceof JsonPrimitive primitive) {
-                                if (primitive.isBoolean()) {
-                                    boolean value = primitive.getAsBoolean();
+                    JsonElement jsonValue = entry.getValue();
 
-                                    if (rule instanceof GameRules.BooleanRule booleanRule) {
-                                        if (booleanRule.get() != value) {
-                                            source.sendFeedback(Text.translatable("command.gamerulepreset.load.change", ruleName, booleanRule.get(), value), true);
-                                            booleanRule.set(value, world.getServer());
-                                            i.getAndIncrement();
-                                        }
-                                    }
-                                } else if (primitive.isNumber()) {
-                                    int value = primitive.getAsInt();
+                    if (jsonValue instanceof JsonPrimitive primitive) {
+                        if (primitive.isBoolean()) {
+                            boolean value = primitive.getAsBoolean();
 
-                                    if (rule instanceof GameRules.IntRule intRule) {
-                                        if (intRule.get() != value) {
-                                            source.sendFeedback(Text.translatable("command.gamerulepreset.load.change", ruleName, intRule.get(), value), true);
-                                            intRule.set(value, world.getServer());
-                                            i.getAndIncrement();
-                                        }
-                                    }
-                                }
+                            if (rule instanceof GameRules.BooleanRule booleanRule) {
+                                if (booleanRule.get() == value) continue;
+
+                                source.sendFeedback(
+                                        () -> Text.translatable(
+                                                "command.gamerulepreset.load.change",
+                                                ruleName,
+                                                booleanRule.get(),
+                                                value
+                                        ),
+                                        true
+                                );
+                                booleanRule.set(value, world.getServer());
+                                i.getAndIncrement();
+                            }
+                        } else if (primitive.isNumber()) {
+                            int value = primitive.getAsInt();
+
+                            if (rule instanceof GameRules.IntRule intRule) {
+                                if (intRule.get() == value) continue;
+
+                                source.sendFeedback(
+                                        () -> Text.translatable(
+                                                "command.gamerulepreset.load.change",
+                                                ruleName,
+                                                intRule.get(),
+                                                value
+                                        ),
+                                        true
+                                );
+                                intRule.set(value, world.getServer());
+                                i.getAndIncrement();
                             }
                         }
                     }
-                }));
-            }
-        } else return -1;
+                }
+            }));
+        }
 
         return i.get();
     }

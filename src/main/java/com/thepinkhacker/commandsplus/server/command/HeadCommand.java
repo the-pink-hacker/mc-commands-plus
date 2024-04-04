@@ -85,7 +85,7 @@ public class HeadCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("commands.head.give.success"), false);
+            source.sendFeedback(() -> Text.translatable("commands.head.give.success"), false);
         } else {
             throw GIVE_EXCEPTION.create();
         }
@@ -113,7 +113,7 @@ public class HeadCommand {
             GameProfile owner = head.getOwner();
 
             if (owner != null) {
-                source.sendFeedback(copyText("commands.head.query.uuid.success", owner.getId().toString()), false);
+                source.sendFeedback(() -> copyText("commands.head.query.uuid.success", owner.getId().toString()), false);
                 i = 1;
             }
         }
@@ -130,7 +130,7 @@ public class HeadCommand {
             GameProfile owner = head.getOwner();
 
             if (owner != null) {
-                source.sendFeedback(copyText("commands.head.query.name.success", owner.getName()), false);
+                source.sendFeedback(() -> copyText("commands.head.query.name.success", owner.getName()), false);
                 i = 1;
             }
         }

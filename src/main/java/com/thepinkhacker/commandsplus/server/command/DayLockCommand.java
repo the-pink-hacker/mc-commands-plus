@@ -37,7 +37,7 @@ public class DayLockCommand {
         // Bedrock is weird
         if (dayLock) source.getWorld().setTimeOfDay(6_000);
 
-        source.sendFeedback(Text.translatable("commands.daylock.success", !dayLock), true);
+        source.sendFeedback(() -> Text.translatable("commands.daylock.success", !dayLock), true);
 
         // Return 1 only if the value changes
         return rules.getBoolean(GameRules.DO_DAYLIGHT_CYCLE) == dayLock ? 1 : 0;
