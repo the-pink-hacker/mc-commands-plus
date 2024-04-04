@@ -1,18 +1,19 @@
 {
   "schemaVersion": 1,
   "id": "commandsplus",
-  "version": "0.1",
+  "version": "${version}",
   "name": "Commands+",
-  "description": "",
+  "description": "A Mod that adds new helpful commands to Minecraft.",
   "authors": [
     "Ryan Garrett (RyanGar46)"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/name-command",
-    "sources": "https://github.com/RyanGar46/mc-commands-plus"
+    "sources": "https://github.com/RyanGar46/mc-commands-plus",
+    "issues": "https://github.com/RyanGar46/mc-commands-plus/issues"
   },
   "license": "GPL-v3.0",
-  "icon": "assets/commandsplus/icon.png",
+  "icon": "assets/commandsplus/icons/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
