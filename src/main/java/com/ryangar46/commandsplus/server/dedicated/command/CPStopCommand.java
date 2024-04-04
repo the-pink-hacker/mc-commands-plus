@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 // TODO: Message all players on the server that it will close
 public class CPStopCommand {
     private static volatile int timeLeft;
-    private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("command.cpstop.cancel.fail"));
+    private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("commands.cpstop.cancel.fail"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("cpstop")
@@ -44,7 +44,7 @@ public class CPStopCommand {
                     if (timeLeft ==  -1) return;
                     timeLeft = seconds - i;
 
-                    source.sendFeedback(Text.translatable("command.cpstop.time", timeLeft), true);
+                    source.sendFeedback(Text.translatable("commands.cpstop.time", timeLeft), true);
 
                     try {
                         Thread.sleep(seconds * 100L);
@@ -53,13 +53,13 @@ public class CPStopCommand {
                     }
                 }
 
-                source.sendFeedback(Text.translatable("command.cpstop.stop", seconds), true);
+                source.sendFeedback(Text.translatable("commands.cpstop.stop", seconds), true);
                 server.stop(false);
             }, "Server stop thread");
 
             thread.start();
         } else {
-            source.sendFeedback(Text.translatable("command.cpstop.immediate"), true);
+            source.sendFeedback(Text.translatable("commands.cpstop.immediate"), true);
             server.stop(false);
         }
 
@@ -69,7 +69,7 @@ public class CPStopCommand {
     private static int cancel(ServerCommandSource source) throws CommandSyntaxException {
         if (timeLeft > 0) {
             timeLeft = -1;
-            source.sendFeedback(Text.translatable("command.cpstop.cancel.success"), true);
+            source.sendFeedback(Text.translatable("commands.cpstop.cancel.success"), true);
 
             return 1;
         }

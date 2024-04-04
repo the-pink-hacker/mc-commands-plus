@@ -19,6 +19,7 @@ public class CommandsPlus implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             ClearSpawnPointCommand.register(dispatcher);
             GameRulePresetCommand.register(dispatcher);
+            HeadCommand.register(dispatcher);
             HealthCommand.register(dispatcher);
             HungerCommand.register(dispatcher);
             NameCommand.register(dispatcher);

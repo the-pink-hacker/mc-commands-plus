@@ -14,7 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.nio.file.Path;
 
 public class GameRulePresetCommand {
-    private static final DynamicCommandExceptionType FAILED_TO_LOAD_EXCEPTION = new DynamicCommandExceptionType(preset -> Text.translatable("command.gamerulepreset.load.fail", preset));
+    private static final DynamicCommandExceptionType FAILED_TO_LOAD_EXCEPTION = new DynamicCommandExceptionType(preset -> Text.translatable("commands.gamerulepreset.load.fail", preset));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("gamerulepreset")
@@ -41,7 +41,7 @@ public class GameRulePresetCommand {
 
     private static int save(ServerCommandSource source, Path path) {
         GameRulePreset.save(path, source.getWorld());
-        source.sendFeedback(Text.translatable("command.gamerulepreset.save.success", FilenameUtils.getBaseName(path.toString())), true);
+        source.sendFeedback(Text.translatable("commands.gamerulepreset.save.success", FilenameUtils.getBaseName(path.toString())), true);
         return 1;
     }
 
@@ -49,10 +49,10 @@ public class GameRulePresetCommand {
         int i = GameRulePreset.load(path, source);
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("command.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
+            source.sendFeedback(Text.translatable("commands.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         } else if (i == 0) {
-            source.sendFeedback(Text.translatable("command.gamerulepreset.load.no_change", FilenameUtils.getBaseName(path.toString())), true);
+            source.sendFeedback(Text.translatable("commands.gamerulepreset.load.noChange", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         }
 

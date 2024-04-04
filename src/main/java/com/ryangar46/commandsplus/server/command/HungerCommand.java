@@ -201,9 +201,9 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.hunger.set.food.success", food, i), false);
+            source.sendFeedback(Text.translatable("commands.hunger.set.food.success", food, i), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.hunger.set.food.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.food.fail")).create();
         }
 
         return i;
@@ -225,9 +225,9 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.hunger.set.exhaustion.success", exhaustion, i), false);
+            source.sendFeedback(Text.translatable("commands.hunger.set.exhaustion.success", exhaustion, i), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.hunger.set.exhaustion.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.exhaustion.fail")).create();
         }
 
         return i;
@@ -249,9 +249,9 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.hunger.set.saturation.success", saturation, i), false);
+            source.sendFeedback(Text.translatable("commands.hunger.set.saturation.success", saturation, i), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.hunger.set.saturation.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.saturation.fail")).create();
         }
 
         return i;
@@ -274,9 +274,9 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.hunger.add.food.success", food, i), false);
+            source.sendFeedback(Text.translatable("commands.hunger.add.food.success", food, i), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.hunger.add.food.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.food.fail")).create();
         }
 
         return i;
@@ -299,9 +299,9 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.hunger.add.exhaustion.success", exhaustion, i), false);
+            source.sendFeedback(Text.translatable("commands.hunger.add.exhaustion.success", exhaustion, i), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.hunger.add.exhaustion.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.exhaustion.fail")).create();
         }
 
         return i;
@@ -324,9 +324,9 @@ public class HungerCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(Text.translatable("command.hunger.add.saturation.success", saturation, i), false);
+            source.sendFeedback(Text.translatable("commands.hunger.add.saturation.success", saturation, i), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("command.hunger.add.saturation.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.saturation.fail")).create();
         }
 
         return i;
@@ -341,7 +341,7 @@ public class HungerCommand {
 
     private static int queryFood(ServerCommandSource source, ServerPlayerEntity player) {
         int hunger = player.getHungerManager().getFoodLevel();
-        source.sendFeedback(Text.translatable("command.hunger.query.food.success", hunger), false);
+        source.sendFeedback(Text.translatable("commands.hunger.query.food.success", hunger), false);
         return hunger > 0 ? 1 : 0;
     }
 
@@ -351,7 +351,7 @@ public class HungerCommand {
 
     private static int queryExhaustion(ServerCommandSource source, ServerPlayerEntity player) {
         float exhaustion = player.getHungerManager().getExhaustion();
-        source.sendFeedback(Text.translatable("command.hunger.query.exhaustion.success", exhaustion), false);
+        source.sendFeedback(Text.translatable("commands.hunger.query.exhaustion.success", exhaustion), false);
         return exhaustion > 0 ? 1 : 0;
     }
 
@@ -361,7 +361,7 @@ public class HungerCommand {
 
     private static int querySaturation(ServerCommandSource source, ServerPlayerEntity player) {
         float saturation = player.getHungerManager().getSaturationLevel();
-        source.sendFeedback(Text.translatable("command.hunger.query.saturation.success", saturation), false);
+        source.sendFeedback(Text.translatable("commands.hunger.query.saturation.success", saturation), false);
         return saturation > 0 ? 1 : 0;
     }
 

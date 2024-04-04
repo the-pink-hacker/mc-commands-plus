@@ -22,11 +22,11 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Collection;
 
 public class RideCommand {
-    private static final SimpleCommandExceptionType START_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("command.ride.start_riding.fail"));
-    private static final SimpleCommandExceptionType STOP_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("command.ride.stop_riding.fail"));
-    private static final SimpleCommandExceptionType EVICT_RIDERS_FAILED = new SimpleCommandExceptionType(Text.translatable("command.ride.evict_riders.fail"));
-    private static final SimpleCommandExceptionType SUMMON_RIDER_FAILED = new SimpleCommandExceptionType(Text.translatable("command.ride.summon_rider.fail"));
-    private static final SimpleCommandExceptionType SUMMON_RIDE_FAILED = new SimpleCommandExceptionType(Text.translatable("command.ride.summon_ride.fail"));
+    private static final SimpleCommandExceptionType START_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.start_riding.fail"));
+    private static final SimpleCommandExceptionType STOP_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.stop_riding.fail"));
+    private static final SimpleCommandExceptionType EVICT_RIDERS_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.evict_riders.fail"));
+    private static final SimpleCommandExceptionType SUMMON_RIDER_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.summon_rider.fail"));
+    private static final SimpleCommandExceptionType SUMMON_RIDE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.ride.summon_ride.fail"));
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.summon.failed.uuid"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
@@ -97,9 +97,9 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("command.ride.start_riding.success.multiple", i), false);
+            source.sendFeedback(Text.translatable("commands.ride.start_riding.success.multiple", i), false);
         } else if (i == 1) {
-            source.sendFeedback(Text.translatable("command.ride.start_riding.success.single", i), false);
+            source.sendFeedback(Text.translatable("commands.ride.start_riding.success.single", i), false);
         } else {
             throw START_RIDING_FAILED.create();
         }
@@ -121,9 +121,9 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("command.ride.stop_riding.success.multiple", i), false);
+            source.sendFeedback(Text.translatable("commands.ride.stop_riding.success.multiple", i), false);
         } else if (i == 1) {
-            source.sendFeedback(Text.translatable("command.ride.stop_riding.success.single", i), false);
+            source.sendFeedback(Text.translatable("commands.ride.stop_riding.success.single", i), false);
         } else {
             throw STOP_RIDING_FAILED.create();
         }
@@ -143,9 +143,9 @@ public class RideCommand {
         }
 
         if (i > 1) {
-            source.sendFeedback(Text.translatable("command.ride.evict_riders.success.multiple", i), false);
+            source.sendFeedback(Text.translatable("commands.ride.evict_riders.success.multiple", i), false);
         } else if (i == 1) {
-            source.sendFeedback(Text.translatable("command.ride.evict_riders.success.single", i), false);
+            source.sendFeedback(Text.translatable("commands.ride.evict_riders.success.single", i), false);
         } else {
             throw EVICT_RIDERS_FAILED.create();
         }
@@ -177,7 +177,7 @@ public class RideCommand {
 
                 if (world.spawnNewEntityAndPassengers(rider)) {
                     rider.startRiding(ride);
-                    source.sendFeedback(Text.translatable("command.ride.summon_rider.success", rider.getDisplayName()), true);
+                    source.sendFeedback(Text.translatable("commands.ride.summon_rider.success", rider.getDisplayName()), true);
                     return 1;
                 } else {
                     throw FAILED_UUID_EXCEPTION.create();
@@ -211,7 +211,7 @@ public class RideCommand {
 
             if (world.spawnNewEntityAndPassengers(ride)) {
                 rider.startRiding(ride);
-                source.sendFeedback(Text.translatable("command.ride.summon_ride.success", ride.getDisplayName()), true);
+                source.sendFeedback(Text.translatable("commands.ride.summon_ride.success", ride.getDisplayName()), true);
                 return 1;
             } else {
                 throw FAILED_UUID_EXCEPTION.create();
