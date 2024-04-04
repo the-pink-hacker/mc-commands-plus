@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.minecraft.command.argument.MessageArgumentType;
 import net.minecraft.network.message.MessageSender;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
