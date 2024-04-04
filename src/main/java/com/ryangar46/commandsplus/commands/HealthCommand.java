@@ -19,16 +19,13 @@ public class HealthCommand {
                 .requires((commandSource) -> commandSource.hasPermissionLevel(2))
                 .then(CommandManager.argument("target", EntityArgumentType.entities())
                         .then(CommandManager.literal("get")
-                                .executes((context) -> {
-                                    return getHealth(context.getSource(), EntityArgumentType.getEntity(context, "target")); }))
+                                .executes((context) -> getHealth(context.getSource(), EntityArgumentType.getEntity(context, "target"))))
                         .then(CommandManager.literal("set")
                                 .then(CommandManager.argument("health", FloatArgumentType.floatArg(0f, Float.MAX_VALUE))
-                                        .executes((context) -> {
-                                            return setHealth(context.getSource(), EntityArgumentType.getEntities(context, "target"), FloatArgumentType.getFloat(context, "health")); })))
+                                        .executes((context) -> setHealth(context.getSource(), EntityArgumentType.getEntities(context, "target"), FloatArgumentType.getFloat(context, "health")))))
                         .then(CommandManager.literal("add")
                                 .then(CommandManager.argument("health", FloatArgumentType.floatArg(-Float.MAX_VALUE, Float.MAX_VALUE))
-                                        .executes((context) -> {
-                                            return addHealth(context.getSource(), EntityArgumentType.getEntities(context, "target"), FloatArgumentType.getFloat(context, "health")); })))));
+                                        .executes((context) -> addHealth(context.getSource(), EntityArgumentType.getEntities(context, "target"), FloatArgumentType.getFloat(context, "health")))))));
     }
 
     private static int setHealth(ServerCommandSource source, Collection<? extends Entity> target, float health) throws CommandSyntaxException {

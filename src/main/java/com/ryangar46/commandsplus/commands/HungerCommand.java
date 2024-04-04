@@ -20,16 +20,13 @@ public class HungerCommand {
                 .requires((commandSource) -> commandSource.hasPermissionLevel(2))
                 .then(CommandManager.argument("target", EntityArgumentType.players())
                         .then(CommandManager.literal("get")
-                                .executes((context) -> {
-                                    return getHunger(context.getSource(), EntityArgumentType.getPlayer(context, "target")); }))
+                                .executes((context) -> getHunger(context.getSource(), EntityArgumentType.getPlayer(context, "target"))))
                         .then(CommandManager.literal("set")
                                 .then(CommandManager.argument("hunger", IntegerArgumentType.integer(0, Integer.MAX_VALUE))
-                                        .executes((context) -> {
-                                            return setHunger(context.getSource(), EntityArgumentType.getPlayers(context, "target"), IntegerArgumentType.getInteger(context, "hunger")); })))
+                                        .executes((context) -> setHunger(context.getSource(), EntityArgumentType.getPlayers(context, "target"), IntegerArgumentType.getInteger(context, "hunger")))))
                         .then(CommandManager.literal("add")
                                 .then(CommandManager.argument("hunger", IntegerArgumentType.integer(-Integer.MAX_VALUE, Integer.MAX_VALUE))
-                                        .executes((context) -> {
-                                            return addHunger(context.getSource(), EntityArgumentType.getPlayers(context, "target"), IntegerArgumentType.getInteger(context, "hunger")); })))));
+                                        .executes((context) -> addHunger(context.getSource(), EntityArgumentType.getPlayers(context, "target"), IntegerArgumentType.getInteger(context, "hunger")))))));
     }
 
     private static int setHunger(ServerCommandSource source, Collection<? extends ServerPlayerEntity> target, int hunger) throws CommandSyntaxException {
