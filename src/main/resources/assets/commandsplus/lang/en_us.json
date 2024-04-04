@@ -1,0 +1,10 @@
+{
+    "command.health.add.success": "Added %s health to %s entities",
+    "command.health.add.fail": "Failed to add health",
+    "command.health.get.success": "Entity's health is %s",
+    "command.health.get.fail": "Failed to get health",
+    "command.health.set.success": "Set %s entities' health to %s",
+    "command.health.set.fail": "Failed to set health",
+    "command.name.success": "Successfully changed %s stack(s) to %s",
+    "command.name.fail": "Failed to name item"
+}
