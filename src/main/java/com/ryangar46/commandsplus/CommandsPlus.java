@@ -16,13 +16,14 @@ public class CommandsPlus implements ModInitializer {
         ArgumentTypeManager.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            LOGGER.info("Registering commands");
             ClearSpawnPointCommand.register(dispatcher);
+            GameRulePresetCommand.register(dispatcher);
             HealthCommand.register(dispatcher);
             HungerCommand.register(dispatcher);
             NameCommand.register(dispatcher);
             RideCommand.register(dispatcher);
             SetOwnerCommand.register(dispatcher);
-            LOGGER.info("Registered commands");
         });
     }
 }
