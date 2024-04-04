@@ -2,10 +2,8 @@ package com.ryangar46.commandsplus.server.dedicated.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.minecraft.network.message.DecoratedContents;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.MinecraftServer;
@@ -87,6 +85,6 @@ public class CPStopCommand {
 
     private static void sendServerMessage(PlayerManager playerManager, ServerCommandSource source, Text text) {
         // Todo: Make secure
-        playerManager.broadcast(SignedMessage.ofUnsigned(new DecoratedContents(text.toString(), text)), source, MessageType.params(MessageType.CHAT, source));
+        playerManager.broadcast(SignedMessage.ofUnsigned(text.toString()), source, MessageType.params(MessageType.CHAT, source));
     }
 }
