@@ -98,7 +98,7 @@ public class HungerCommand {
                                 )
                         )
                         .then(CommandManager.literal("exhaustion")
-                                .then(CommandManager.argument("targets", EntityArgumentType.player())
+                                .then(CommandManager.argument("target", EntityArgumentType.player())
                                         .executes(context -> queryExhaustion(
                                                 context.getSource(),
                                                 EntityArgumentType.getPlayer(context, "target"))
@@ -106,7 +106,7 @@ public class HungerCommand {
                                 )
                         )
                         .then(CommandManager.literal("saturation")
-                                .then(CommandManager.argument("targets", EntityArgumentType.player())
+                                .then(CommandManager.argument("target", EntityArgumentType.player())
                                         .executes(context -> querySaturation(
                                                 context.getSource(),
                                                 EntityArgumentType.getPlayer(context, "target"))
