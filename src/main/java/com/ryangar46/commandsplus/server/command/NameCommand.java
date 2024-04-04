@@ -19,7 +19,7 @@ import java.util.Collection;
 public class NameCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("name")
-                .requires((commandSource) -> commandSource.hasPermissionLevel(2))
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("item")
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                 .then(CommandManager.argument("slot", ItemSlotArgumentType.itemSlot())

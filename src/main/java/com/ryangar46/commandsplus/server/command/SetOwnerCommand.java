@@ -16,7 +16,7 @@ import java.util.Collection;
 public class SetOwnerCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("setowner")
-                .requires(commandSource -> commandSource.hasPermissionLevel(2))
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("pets", EntityArgumentType.entities())
                         .then(CommandManager.argument("player", EntityArgumentType.player())
                                 .executes(context -> setOwner(
