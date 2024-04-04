@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.ryangar46.commandsplus.util.command.AliasUtils;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.EntitySummonArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
@@ -78,7 +79,7 @@ public class RideCommand {
                 )
         );
 
-        dispatcher.register(CommandManager.literal("mount").redirect(node));
+        AliasUtils.createAlias(dispatcher, node, "mount");
     }
 
     /**

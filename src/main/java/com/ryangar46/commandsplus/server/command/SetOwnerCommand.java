@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.ryangar46.commandsplus.util.command.AliasUtils;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -33,7 +34,7 @@ public class SetOwnerCommand {
                 )
         );
 
-        dispatcher.register(CommandManager.literal("tame").redirect(node));
+        AliasUtils.createAlias(dispatcher, node, "tame");
     }
 
     private static int setOwner(ServerCommandSource source, Collection<? extends Entity> entities, ServerPlayerEntity player) throws CommandSyntaxException {
