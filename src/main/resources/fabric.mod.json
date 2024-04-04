@@ -5,19 +5,25 @@
   "name": "Commands+",
   "description": "A Mod that adds new helpful commands to Minecraft.",
   "authors": [
-    "Ryan Garrett (RyanGar46)"
+    {
+      "name": "The Pink Hacker",
+      "contact": {
+        "email": "pink@thepinkhacker.com",
+        "homepage": "https://thepinkhacker.com"
+      }
+    }
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/commandsplus",
-    "sources": "https://github.com/RyanGar46/mc-commands-plus",
-    "issues": "https://github.com/RyanGar46/mc-commands-plus/issues"
+    "sources": "https://github.thepinkhacker.com/mc-commands-plus",
+    "issues": "https://github.thepinkhacker.com/mc-commands-plus/issues"
   },
   "license": "LGPL-v3.0",
   "icon": "assets/commandsplus/icons/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.ryangar46.commandsplus.CommandsPlus"
+      "com.thepinkhacker.commandsplus.CommandsPlus"
     ]
   },
   "mixins": [
@@ -27,7 +33,7 @@
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric-api": "*",
-    "minecraft": "~1.19.3-rc.1",
+    "minecraft": ">=1.19.3",
     "java": ">=17"
   }
 }
