@@ -28,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 public class HeadCommand implements CommandRegistrationCallback {
     private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.head.give.fail"));
@@ -38,11 +39,11 @@ public class HeadCommand implements CommandRegistrationCallback {
                 .then(CommandManager.literal("give")
                         .requires(source -> source.hasPermissionLevel(2))
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
-                                .then(CommandManager.argument("heads", GameProfileArgumentType.gameProfile())
+                                .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
                                         .executes(context -> give(
                                                 context.getSource(),
                                                 EntityArgumentType.getPlayers(context, "targets"),
-                                                GameProfileArgumentType.getProfileArgument(context, "heads")
+                                                GameProfileArgumentType.getProfileArgument(context, "player")
                                         ))
                                 )
                         )
@@ -64,6 +65,23 @@ public class HeadCommand implements CommandRegistrationCallback {
                                                 BlockPosArgumentType.getLoadedBlockPos(context, "pos")
                                         ))
                                 )
+                                // TODO: Add is up-to-date
+                        )
+                )
+                .then(CommandManager.literal("update")
+                        .requires(source -> source.hasPermissionLevel(2))
+                        .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
+                                .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
+                                        .executes(context -> updateHead(
+                                                context.getSource(),
+                                                BlockPosArgumentType.getLoadedBlockPos(context, "pos"),
+                                                GameProfileArgumentType.getProfileArgument(context, "player").stream().findFirst().orElseThrow()
+                                        ))
+                                )
+                                .executes(context -> updateHead(
+                                        context.getSource(),
+                                        BlockPosArgumentType.getLoadedBlockPos(context, "pos")
+                                ))
                         )
                 )
         );
@@ -142,6 +160,39 @@ public class HeadCommand implements CommandRegistrationCallback {
     }
 
     private static Text copyText(String key, String copyText) {
-        return Text.translatable(key, Texts.bracketed(Text.literal(String.valueOf(copyText)).styled((style) -> style.withColor(Formatting.GREEN).withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, String.valueOf(copyText))).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable(copyText))).withInsertion(String.valueOf(copyText)))));
+        return Text.translatable(
+                key,
+                Texts.bracketed(Text.literal(String.valueOf(copyText))
+                        .styled((style) -> style
+                                .withColor(Formatting.GREEN)
+                                .withClickEvent(new ClickEvent(
+                                        ClickEvent.Action.COPY_TO_CLIPBOARD,
+                                        String.valueOf(copyText)
+                                ))
+                                .withHoverEvent(new HoverEvent(
+                                        HoverEvent.Action.SHOW_TEXT,
+                                        Text.translatable(copyText)
+                                ))
+                                .withInsertion(String.valueOf(copyText))
+                        )
+                )
+        );
+    }
+
+    private static int updateHead(ServerCommandSource source, BlockPos pos, GameProfile profile) {
+        int i = 0;
+
+        if (source.getWorld().getBlockEntity(pos) instanceof SkullBlockEntity entity) {
+            // TODO: Fix heads stay cached until reloading the world
+            entity.setOwner(profile);
+
+            i = 1;
+        }
+
+        return i;
+    }
+
+    private static int updateHead(ServerCommandSource source, BlockPos pos) {
+        return updateHead(source, pos, source.getPlayer().getGameProfile());
     }
 }
