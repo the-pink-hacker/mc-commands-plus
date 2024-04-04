@@ -79,7 +79,8 @@ public class HealthCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.health.set.success", health, i), false);
+            int finalI = i;
+            source.sendFeedback(() -> Text.translatable("commands.health.set.success", health, finalI), false);
         } else {
             throw new SimpleCommandExceptionType(Text.translatable("commands.health.set.fail")).create();
         }
@@ -105,7 +106,8 @@ public class HealthCommand {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.health.add.success", health, i), false);
+            int finalI = i;
+            source.sendFeedback(() -> Text.translatable("commands.health.add.success", health, finalI), false);
         } else {
             throw new SimpleCommandExceptionType(Text.translatable("commands.health.add.fail")).create();
         }
