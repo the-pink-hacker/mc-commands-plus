@@ -3,6 +3,7 @@ package com.ryangar46.commandsplus.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -15,7 +16,7 @@ import java.util.Collection;
 
 public class SetOwnerCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("setowner")
+        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("setowner")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("pets", EntityArgumentType.entities())
                         .then(CommandManager.argument("player", EntityArgumentType.player())
@@ -27,6 +28,8 @@ public class SetOwnerCommand {
                         )
                 )
         );
+
+        dispatcher.register(CommandManager.literal("tame").redirect(node));
     }
 
     private static int setOwner(ServerCommandSource source, Collection<? extends Entity> entities, ServerPlayerEntity player) throws CommandSyntaxException {

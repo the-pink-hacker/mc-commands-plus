@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +16,7 @@ import java.util.Collection;
 
 public class HealthCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("health")
+        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("health")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
@@ -48,6 +49,8 @@ public class HealthCommand {
                         )
                 )
         );
+
+        dispatcher.register(CommandManager.literal("hp").redirect(node));
     }
 
     private static int setHealth(ServerCommandSource source, Collection<? extends Entity> entities, float health) throws CommandSyntaxException {
