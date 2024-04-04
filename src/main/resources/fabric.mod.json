@@ -12,7 +12,7 @@
     "sources": "https://github.com/RyanGar46/mc-commands-plus",
     "issues": "https://github.com/RyanGar46/mc-commands-plus/issues"
   },
-  "license": "GPL-v3.0",
+  "license": "LGPL-v3.0",
   "icon": "assets/commandsplus/icons/icon.png",
   "environment": "*",
   "entrypoints": {
