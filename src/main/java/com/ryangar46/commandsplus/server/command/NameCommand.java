@@ -24,7 +24,7 @@ public class NameCommand {
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                 .then(CommandManager.argument("slot", ItemSlotArgumentType.itemSlot())
                                         .then(CommandManager.argument("name", MessageArgumentType.message())
-                                                .executes((context) -> nameItem(
+                                                .executes(context -> nameItem(
                                                         context.getSource(),
                                                         EntityArgumentType.getEntities(context, "targets"),
                                                         ItemSlotArgumentType.getItemSlot(context, "slot"),
@@ -37,7 +37,7 @@ public class NameCommand {
                 .then(CommandManager.literal("entity")
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                 .then(CommandManager.argument("name", MessageArgumentType.message())
-                                        .executes((context) -> nameEntity(
+                                        .executes(context -> nameEntity(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntities(context, "targets"),
                                                 MessageArgumentType.getMessage(context, "name").getString())
@@ -48,7 +48,7 @@ public class NameCommand {
         );
     }
 
-    public static int nameItem(ServerCommandSource source, Collection<? extends Entity> targets, int slot, String name) throws CommandSyntaxException {
+    private static int nameItem(ServerCommandSource source, Collection<? extends Entity> targets, int slot, String name) throws CommandSyntaxException {
         int i = 0;
 
         for (Entity entity : targets) {
