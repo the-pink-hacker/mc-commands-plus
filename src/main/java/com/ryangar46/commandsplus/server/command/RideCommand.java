@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.ryangar46.commandsplus.command.argument.TeleportRuleArgumentType;
 import com.ryangar46.commandsplus.util.command.AliasUtils;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.EntitySummonArgumentType;
@@ -31,30 +32,42 @@ public class RideCommand {
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.summon.failed.uuid"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        // Todo: Add optional fields from bedrock edition
+        /*
+         * Todo: Add optional fields from bedrock edition
+         *  - nameTag
+         *  - rideRules
+         */
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("ride")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("riders", EntityArgumentType.entities())
                         .then(CommandManager.literal("start_riding")
                                 .then(CommandManager.argument("ride", EntityArgumentType.entity())
+                                        .then(CommandManager.argument("teleportRules", TeleportRuleArgumentType.teleportRule())
+                                                .executes(context -> startRiding(
+                                                        context.getSource(),
+                                                        EntityArgumentType.getEntities(context, "riders"),
+                                                        EntityArgumentType.getEntity(context, "ride"),
+                                                        TeleportRuleArgumentType.getTeleportRule(context, "teleportRules")
+                                                ))
+                                        )
                                         .executes(context -> startRiding(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntities(context, "riders"),
-                                                EntityArgumentType.getEntity(context, "ride"))
-                                        )
+                                                EntityArgumentType.getEntity(context, "ride")
+                                        ))
                                 )
                         )
                         .then(CommandManager.literal("stop_riding")
                                 .executes(context -> stopRiding(
                                         context.getSource(),
-                                        EntityArgumentType.getEntities(context, "riders"))
-                                )
+                                        EntityArgumentType.getEntities(context, "riders")
+                                ))
                         )
                         .then(CommandManager.literal("evict_riders")
                                 .executes(context -> evictRiders(
                                         context.getSource(),
-                                        EntityArgumentType.getEntities(context, "riders"))
-                                )
+                                        EntityArgumentType.getEntities(context, "riders")
+                                ))
                         )
                         .then(CommandManager.literal("summon_rider")
                                 .then(CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
@@ -62,8 +75,8 @@ public class RideCommand {
                                         .executes(context -> summonRider(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntity(context, "riders"),
-                                                EntitySummonArgumentType.getEntitySummon(context, "entity"))
-                                        )
+                                                EntitySummonArgumentType.getEntitySummon(context, "entity")
+                                        ))
                                 )
                         )
                         .then(CommandManager.literal("summon_ride")
@@ -72,8 +85,8 @@ public class RideCommand {
                                         .executes(context -> summonRide(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntity(context, "riders"),
-                                                EntitySummonArgumentType.getEntitySummon(context, "entity"))
-                                        )
+                                                EntitySummonArgumentType.getEntitySummon(context, "entity")
+                                        ))
                                 )
                         )
                 )
@@ -85,10 +98,18 @@ public class RideCommand {
     /**
      * Makes "riders" ride on "ride"
      */
-    private static int startRiding(ServerCommandSource source, Collection<? extends Entity> riders, Entity ride) throws CommandSyntaxException {
+    private static int startRiding(
+            ServerCommandSource source,
+            Collection<? extends Entity> riders,
+            Entity ride,
+            TeleportRuleArgumentType.TeleportRule teleportRule
+    ) throws CommandSyntaxException {
         int i = 0;
 
         for (Entity rider : riders) {
+            // Teleports ride to rider based on teleport rule
+            if (teleportRule == TeleportRuleArgumentType.TeleportRule.TELEPORT_RIDE) ride.setPosition(rider.getPos());
+
             if (!rider.hasVehicle()) {
                 rider.startRiding(ride);
                 i++;
@@ -108,10 +129,21 @@ public class RideCommand {
         return i;
     }
 
+    private static int startRiding(
+            ServerCommandSource source,
+            Collection<? extends Entity> riders,
+            Entity ride
+    ) throws CommandSyntaxException {
+        return startRiding(source, riders, ride, TeleportRuleArgumentType.TeleportRule.TELEPORT_RIDER);
+    }
+
     /**
      * Makes "targets" dismount their vehicle
      */
-    private static int stopRiding(ServerCommandSource source, Collection<? extends Entity> targets) throws CommandSyntaxException {
+    private static int stopRiding(
+            ServerCommandSource source,
+            Collection<? extends Entity> targets
+    ) throws CommandSyntaxException {
         int i = 0;
 
         for (Entity rider : targets) {
@@ -135,7 +167,10 @@ public class RideCommand {
     /**
      * Makes entities that are rinding on "targets" dismount
      */
-    private static int evictRiders(ServerCommandSource source, Collection<? extends Entity> targets) throws CommandSyntaxException {
+    private static int evictRiders(
+            ServerCommandSource source,
+            Collection<? extends Entity> targets
+    ) throws CommandSyntaxException {
         int i = 0;
 
         for (Entity rider : targets) {
@@ -157,7 +192,11 @@ public class RideCommand {
     /**
      * Summon an entity that will ride on "ride"
      */
-    private static int summonRider(ServerCommandSource source, Entity ride, Identifier id) throws CommandSyntaxException {
+    private static int summonRider(
+            ServerCommandSource source,
+            Entity ride,
+            Identifier id
+    ) throws CommandSyntaxException {
         if (!ride.hasPassengers()) {
             NbtCompound nbt = new NbtCompound();
             nbt.putString("id", id.toString());
@@ -192,7 +231,11 @@ public class RideCommand {
     /**
      * Summon an entity that "rider" will ride
      */
-    private static int summonRide(ServerCommandSource source, Entity rider, Identifier id) throws CommandSyntaxException {
+    private static int summonRide(
+            ServerCommandSource source,
+            Entity rider,
+            Identifier id
+    ) throws CommandSyntaxException {
         NbtCompound nbt = new NbtCompound();
         nbt.putString("id", id.toString());
 
