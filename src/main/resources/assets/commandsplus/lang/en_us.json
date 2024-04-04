@@ -1,6 +1,8 @@
 {
     "command.health.add.fail": "Failed to add health",
     "command.health.add.success": "Added %s health to %s entities",
+    "command.clearspawnpoint.fail": "Failed to clear spawnpoint",
+    "command.clearspawnpoint.success": "Cleared %s players' spawnpoint",
     "command.health.query.fail": "Failed to query health",
     "command.health.query.success": "Entity's health is %s",
     "command.health.set.fail": "Failed to set health",
