@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(ItemEntity.class)
-public class ItemEntityMixin {
+public abstract class ItemEntityMixin {
     @ModifyConstant(
             method = "tick()V",
             constant = @Constant(intValue = 6_000)
@@ -41,6 +41,6 @@ public class ItemEntityMixin {
     }
 
     private int getDespawnAge() {
-        return ((ItemEntity)(Object)this).world.getGameRules().getInt(GameRuleManager.ITEM_DESPAWN_AGE);
+        return ((ItemEntity)(Object)this).getWorld().getGameRules().getInt(GameRuleManager.ITEM_DESPAWN_AGE);
     }
 }
