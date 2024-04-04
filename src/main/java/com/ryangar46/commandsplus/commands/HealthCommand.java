@@ -79,7 +79,7 @@ public class HealthCommand {
             // Checks if they are a Living Entity
             if (entity instanceof LivingEntity) {
                 LivingEntity livingentity = (LivingEntity) entity;
-                livingentity.setHealth(livingentity.getHealth() + health);
+                livingentity.heal(health);
                 i++;
             }
         }
