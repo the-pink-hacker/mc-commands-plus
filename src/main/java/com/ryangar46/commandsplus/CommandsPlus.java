@@ -1,5 +1,6 @@
 package com.ryangar46.commandsplus;
 
+import com.ryangar46.commandsplus.command.argument.ArgumentTypeManager;
 import com.ryangar46.commandsplus.server.command.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -12,6 +13,8 @@ public class CommandsPlus implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ArgumentTypeManager.register();
+
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             ClearSpawnPointCommand.register(dispatcher);
             HealthCommand.register(dispatcher);
