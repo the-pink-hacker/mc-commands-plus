@@ -89,7 +89,7 @@ public class GameRulePreset {
 
                                 source.sendFeedback(
                                         () -> Text.translatable(
-                                                "command.gamerulepreset.load.change",
+                                                "commands.gamerulepreset.load.change",
                                                 ruleName,
                                                 booleanRule.get(),
                                                 value
@@ -107,7 +107,7 @@ public class GameRulePreset {
 
                                 source.sendFeedback(
                                         () -> Text.translatable(
-                                                "command.gamerulepreset.load.change",
+                                                "commands.gamerulepreset.load.change",
                                                 ruleName,
                                                 intRule.get(),
                                                 value
