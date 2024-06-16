@@ -3,7 +3,6 @@ package com.thepinkhacker.commandsplus.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
-import com.thepinkhacker.commandsplus.CommandsPlus;
 import com.thepinkhacker.commandsplus.command.argument.GameRulePresetArgumentType;
 import com.thepinkhacker.commandsplus.world.GameRulePreset;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;

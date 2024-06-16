@@ -1,11 +1,7 @@
 package com.thepinkhacker.commandsplus.world;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.minecraft.command.argument.TimeArgumentType;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;
-
-import java.util.function.BiConsumer;
 
 public class GameRuleManager {
     public static final GameRules.Key<GameRules.IntRule> ITEM_DESPAWN_AGE = GameRuleRegistry.register(
