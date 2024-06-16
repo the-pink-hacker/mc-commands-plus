@@ -9,7 +9,7 @@ import com.thepinkhacker.commandsplus.util.command.AliasUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.RegistryEntryArgumentType;
+import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -22,7 +22,6 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Collection;
@@ -75,22 +74,22 @@ public class RideCommand implements CommandRegistrationCallback {
                                 ))
                         )
                         .then(CommandManager.literal("summon_rider")
-                                .then(CommandManager.argument("entity", RegistryEntryArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
+                                .then(CommandManager.argument("entity", RegistryEntryReferenceArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
                                         .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                                         .executes(context -> summonRider(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntity(context, "riders"),
-                                                RegistryEntryArgumentType.getSummonableEntityType(context, "entity")
+                                                RegistryEntryReferenceArgumentType.getSummonableEntityType(context, "entity")
                                         ))
                                 )
                         )
                         .then(CommandManager.literal("summon_ride")
-                                .then(CommandManager.argument("entity", RegistryEntryArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
+                                .then(CommandManager.argument("entity", RegistryEntryReferenceArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
                                         .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                                         .executes(context -> summonRide(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntity(context, "riders"),
-                                                RegistryEntryArgumentType.getSummonableEntityType(context, "entity")
+                                                RegistryEntryReferenceArgumentType.getSummonableEntityType(context, "entity")
                                         ))
                                 )
                         )
@@ -220,7 +219,7 @@ public class RideCommand implements CommandRegistrationCallback {
 
             if (rider != null) {
                 if (rider instanceof MobEntity mobEntity) {
-                    mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.COMMAND, null, null);
+                    mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.COMMAND, null);
                 }
 
                 if (world.spawnNewEntityAndPassengers(rider)) {
@@ -258,7 +257,7 @@ public class RideCommand implements CommandRegistrationCallback {
 
         if (ride != null) {
             if (ride instanceof MobEntity mobEntity) {
-                mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.COMMAND, null, null);
+                mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.COMMAND, null);
             }
 
             if (world.spawnNewEntityAndPassengers(ride)) {

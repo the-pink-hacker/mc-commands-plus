@@ -8,6 +8,7 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.ItemSlotArgumentType;
 import net.minecraft.command.argument.MessageArgumentType;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.StackReference;
@@ -61,7 +62,7 @@ public class NameCommand implements CommandRegistrationCallback {
                 ItemStack itemStack = stackReference.get();
 
                 if (!itemStack.isEmpty()) {
-                    itemStack.setCustomName(Text.of(name));
+                    itemStack.set(DataComponentTypes.CUSTOM_NAME, Text.of(name));
                     i++;
                 }
             }

@@ -12,6 +12,8 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -94,11 +96,8 @@ public class HeadCommand implements CommandRegistrationCallback {
 
         for (ServerPlayerEntity player : targets) {
             for (GameProfile profile : profiles) {
-                final NbtCompound nbt = new NbtCompound();
-                nbt.putString("SkullOwner", profile.getName());
-
                 final ItemStack stack = Items.PLAYER_HEAD.getDefaultStack();
-                stack.setNbt(nbt);
+                stack.set(DataComponentTypes.PROFILE, new ProfileComponent(profile));
 
                 player.giveItemStack(stack);
                 i++;
@@ -131,10 +130,10 @@ public class HeadCommand implements CommandRegistrationCallback {
         ServerWorld world = source.getWorld();
 
         if (world.getBlockEntity(pos) instanceof SkullBlockEntity head) {
-            GameProfile owner = head.getOwner();
+            ProfileComponent owner = head.getOwner();
 
             if (owner != null) {
-                source.sendFeedback(() -> copyText("commands.head.query.uuid.success", owner.getId().toString()), false);
+                source.sendFeedback(() -> copyText("commands.head.query.uuid.success", owner.gameProfile().getId().toString()), false);
                 i = 1;
             }
         }
@@ -148,10 +147,10 @@ public class HeadCommand implements CommandRegistrationCallback {
         ServerWorld world = source.getWorld();
 
         if (world.getBlockEntity(pos) instanceof SkullBlockEntity head) {
-            GameProfile owner = head.getOwner();
+            ProfileComponent owner = head.getOwner();
 
             if (owner != null) {
-                source.sendFeedback(() -> copyText("commands.head.query.name.success", owner.getName()), false);
+                source.sendFeedback(() -> copyText("commands.head.query.name.success", owner.gameProfile().getName()), false);
                 i = 1;
             }
         }
@@ -179,7 +178,7 @@ public class HeadCommand implements CommandRegistrationCallback {
         );
     }
 
-    private static int updateHead(ServerCommandSource source, BlockPos pos, GameProfile profile) {
+    private static int updateHead(ServerCommandSource source, BlockPos pos, ProfileComponent profile) {
         int i = 0;
 
         if (source.getWorld().getBlockEntity(pos) instanceof SkullBlockEntity entity) {
@@ -192,7 +191,15 @@ public class HeadCommand implements CommandRegistrationCallback {
         return i;
     }
 
+    private static int updateHead(ServerCommandSource source, BlockPos pos, GameProfile profile) {
+        return updateHead(source, pos, new ProfileComponent(profile));
+    }
+
     private static int updateHead(ServerCommandSource source, BlockPos pos) {
-        return updateHead(source, pos, source.getPlayer().getGameProfile());
+        ServerPlayerEntity player = source.getPlayer();
+
+        if (player == null) return -1;
+
+        return updateHead(source, pos, player.getGameProfile());
     }
 }
