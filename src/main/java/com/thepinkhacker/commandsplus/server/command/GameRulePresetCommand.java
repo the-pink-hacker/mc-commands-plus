@@ -59,7 +59,6 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
             return i;
         }
 
-        CommandsPlus.LOGGER.info(i);
         throw FAILED_TO_LOAD_EXCEPTION.create(FilenameUtils.getBaseName(path.toString()));
     }
 }
