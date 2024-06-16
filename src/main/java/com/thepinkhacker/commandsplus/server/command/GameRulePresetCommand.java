@@ -51,7 +51,7 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
     private static int load(ServerCommandSource source, Path path) throws CommandSyntaxException {
         int i = GameRulePreset.load(path, source);
 
-        if (i > 1) {
+        if (i >= 1) {
             source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         } else if (i == 0) {
