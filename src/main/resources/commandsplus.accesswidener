@@ -11,3 +11,4 @@ accessible method net/minecraft/block/entity/SignBlockEntity updateListeners ()V
 accessible field net/minecraft/entity/player/HungerManager exhaustion F
 
 accessible class net/minecraft/entity/mob/EndermanEntity$PickUpBlockGoal
+accessible class net/minecraft/entity/mob/EndermanEntity$PlaceBlockGoal

@@ -60,5 +60,7 @@
     "gamerule.itemDespawnAge": "Item Despawn Age",
     "gamerule.itemDespawnAge.description": "Controls how long it takes for an item to despawn.",
     "gamerule.doEndermanPickup": "Do Enderman Pickup",
-    "gamerule.doEndermanPickup.description": "Allow Endermen to pick up blocks."
+    "gamerule.doEndermanPickup.description": "Allow Endermen to pick up blocks.",
+    "gamerule.doEndermanPlace": "Do Enderman Place",
+    "gamerule.doEndermanPlace.description": "Allow Endermen to place blocks."
 }

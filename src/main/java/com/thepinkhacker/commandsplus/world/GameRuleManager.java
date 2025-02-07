@@ -16,6 +16,12 @@ public class GameRuleManager {
             GameRules.BooleanRule.create(true)
     );
 
+    public static final GameRules.Key<GameRules.BooleanRule> DO_ENDERMAN_PLACE = GameRuleRegistry.register(
+            "doEndermanPlace",
+            GameRules.Category.MOBS,
+            GameRules.BooleanRule.create(true)
+    );
+
     // Java is weird and won't init the variables unless this runs
     // Otherwise it would try to init after the registry is frozen
     public static void register() {}
