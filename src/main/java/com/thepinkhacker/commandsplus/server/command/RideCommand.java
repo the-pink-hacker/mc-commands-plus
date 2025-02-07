@@ -41,7 +41,7 @@ public class RideCommand implements CommandRegistrationCallback {
          *  - nameTag
          *  - rideRules
          */
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("ride")
+        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("cpride")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("riders", EntityArgumentType.entities())
                         .then(CommandManager.literal("start_riding")
