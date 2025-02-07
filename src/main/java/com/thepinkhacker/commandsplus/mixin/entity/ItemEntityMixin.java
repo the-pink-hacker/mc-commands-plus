@@ -41,6 +41,6 @@ public abstract class ItemEntityMixin {
     }
 
     private int getDespawnAge() {
-        return ((ItemEntity)(Object)this).getWorld().getServer().getGameRules().getInt(GameRuleManager.ITEM_DESPAWN_AGE);
+        return ((ItemEntity)(Object)this).getServer().getGameRules().getInt(GameRuleManager.ITEM_DESPAWN_AGE);
     }
 }

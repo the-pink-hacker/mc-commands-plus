@@ -4,7 +4,8 @@
   "package": "com.thepinkhacker.commandsplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "entity.ItemEntityMixin"
+    "entity.ItemEntityMixin",
+    "entity.mob.EndermanEntityPickUpBlockGoalMixin"
   ],
   "client": [],
   "injectors": {
