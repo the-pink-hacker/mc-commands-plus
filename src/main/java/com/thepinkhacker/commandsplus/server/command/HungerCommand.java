@@ -51,7 +51,7 @@ public class HungerCommand implements CommandRegistrationCallback {
                                         )
                                 )
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
-                                        .then(CommandManager.argument("exhaustion", FloatArgumentType.floatArg(0.0f))
+                                        .then(CommandManager.argument("exhaustion", FloatArgumentType.floatArg(0.0f, 40.0f))
                                                 .executes(context -> setExhaustion(
                                                         context.getSource(),
                                                         EntityArgumentType.getPlayers(context, "targets"),
@@ -225,7 +225,7 @@ public class HungerCommand implements CommandRegistrationCallback {
         int i = 0;
 
         for (ServerPlayerEntity player : players) {
-            player.getHungerManager().setExhaustion(exhaustion);
+            player.getHungerManager().exhaustion = exhaustion;
             i++;
         }
 
@@ -302,7 +302,7 @@ public class HungerCommand implements CommandRegistrationCallback {
 
         for (ServerPlayerEntity player : players) {
             HungerManager hungerManager = player.getHungerManager();
-            hungerManager.setExhaustion(exhaustion + hungerManager.getExhaustion());
+            hungerManager.addExhaustion(exhaustion);
             i++;
         }
 
@@ -360,7 +360,7 @@ public class HungerCommand implements CommandRegistrationCallback {
     }
 
     private static int queryExhaustion(ServerCommandSource source, ServerPlayerEntity player) {
-        float exhaustion = player.getHungerManager().getExhaustion();
+        float exhaustion = player.getHungerManager().exhaustion;
         source.sendFeedback(() -> Text.translatable("commands.hunger.query.exhaustion.success", exhaustion), false);
         return exhaustion > 0 ? 1 : 0;
     }

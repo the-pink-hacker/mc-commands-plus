@@ -21,11 +21,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class GameRulePreset {
     public static final Path GAMERULE_PRESET_PATH = Path.of(FabricLoader.getInstance().getGameDir().toString(), CommandsPlus.MOD_ID, "gamerulepresets");
 
-    public static void save(Path path, World world) {
+    public static void save(Path path, ServerWorld world) {
         JsonObject root = new JsonObject();
         JsonObject gamerules = new JsonObject();
 
-        Map<GameRules.Key<?>, GameRules.Rule<?>> rules = world.getGameRules().rules;
+        Map<GameRules.Key<?>, GameRules.Rule<?>> rules = world.getServer().getGameRules().rules;
 
         rules.forEach((key, rule) -> {
             if (rule instanceof GameRules.BooleanRule booleanRule) gamerules.addProperty(key.getName(), booleanRule.get());

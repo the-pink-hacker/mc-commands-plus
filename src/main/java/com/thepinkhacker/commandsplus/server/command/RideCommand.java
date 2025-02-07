@@ -212,7 +212,7 @@ public class RideCommand implements CommandRegistrationCallback {
 
             Vec3d ridePos = ride.getPos();
 
-            Entity rider = EntityType.loadEntityWithPassengers(nbt, world, entity -> {
+            Entity rider = EntityType.loadEntityWithPassengers(nbt, world, SpawnReason.COMMAND, entity -> {
                 entity.setPosition(ridePos);
                 return entity;
             });
@@ -250,7 +250,7 @@ public class RideCommand implements CommandRegistrationCallback {
 
         Vec3d riderPos = rider.getPos();
 
-        Entity ride = EntityType.loadEntityWithPassengers(nbt, world, entity -> {
+        Entity ride = EntityType.loadEntityWithPassengers(nbt, world, SpawnReason.COMMAND, entity -> {
             entity.setPosition(riderPos);
             return entity;
         });

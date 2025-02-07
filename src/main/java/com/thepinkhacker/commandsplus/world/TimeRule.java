@@ -1,6 +1,7 @@
 package com.thepinkhacker.commandsplus.world;
 
 import net.minecraft.command.argument.TimeArgumentType;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;
 
@@ -19,7 +20,8 @@ public class TimeRule extends GameRules.IntRule {
                 TimeArgumentType::time,
                 type -> new TimeRule(type, initialValue),
                 changeCallback,
-                GameRules.Visitor::visitInt
+                GameRules.Visitor::visitInt,
+                FeatureSet.empty()
         );
     }
 
