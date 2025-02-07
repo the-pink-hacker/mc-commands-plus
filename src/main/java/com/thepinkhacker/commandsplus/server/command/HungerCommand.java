@@ -21,10 +21,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 public class HungerCommand implements CommandRegistrationCallback {
+    private final int PERMISSION_LEVEL = 2;
+
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("hunger")
-                .requires(source -> source.hasPermissionLevel(2))
+                .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.literal("food")
                                 .then(CommandManager.argument("food", IntegerArgumentType.integer(0))
@@ -193,7 +195,7 @@ public class HungerCommand implements CommandRegistrationCallback {
                 )
         );
 
-        AliasUtils.createAlias(dispatcher, node, "food");
+        AliasUtils.createAlias(dispatcher, node, "food", PERMISSION_LEVEL);
     }
 
     private static int setFood(ServerCommandSource source, Collection<ServerPlayerEntity> players, int food) throws CommandSyntaxException {

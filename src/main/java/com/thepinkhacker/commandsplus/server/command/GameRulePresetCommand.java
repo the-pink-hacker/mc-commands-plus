@@ -20,6 +20,7 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(CommandManager.literal("gamerulepreset")
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("save")
                         .requires(source -> source.hasPermissionLevel(4))
                         .then(CommandManager.argument("preset", GameRulePresetArgumentType.preset())
@@ -30,7 +31,6 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
                         )
                 )
                 .then(CommandManager.literal("load")
-                        .requires(source -> source.hasPermissionLevel(2))
                         .then(CommandManager.argument("preset", GameRulePresetArgumentType.preset())
                                 .executes(context -> load(
                                         context.getSource(),

@@ -45,7 +45,7 @@ public class CommandsPlus implements ModInitializer {
             );
 
             // Aliases
-            AliasUtils.createAlias(dispatcher, "gamemode", "gm");
+            AliasUtils.createAlias(dispatcher, "gamemode", "gm", 2);
             AliasUtils.createAlias(dispatcher, "help", "?");
 
             LOGGER.info("Registered commands+.");

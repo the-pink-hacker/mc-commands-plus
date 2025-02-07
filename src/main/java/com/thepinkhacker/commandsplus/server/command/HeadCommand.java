@@ -31,13 +31,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class HeadCommand implements CommandRegistrationCallback {
+    private final int PERMISSION_LEVEL = 2;
+
     private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.head.give.fail"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("head")
                 .then(CommandManager.literal("give")
-                        .requires(source -> source.hasPermissionLevel(2))
+                        .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
                                 .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
                                         .executes(context -> give(

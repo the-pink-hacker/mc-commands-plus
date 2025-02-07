@@ -19,10 +19,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class HealthCommand implements CommandRegistrationCallback {
+    private final int PERMISSION_LEVEL = 2;
+
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("health")
-                .requires(source -> source.hasPermissionLevel(2))
+                .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.argument("health", FloatArgumentType.floatArg(0.0f))
                                 .executes(context -> setHealth(
@@ -68,7 +70,7 @@ public class HealthCommand implements CommandRegistrationCallback {
                 )
         );
 
-        AliasUtils.createAlias(dispatcher, node, "hp");
+        AliasUtils.createAlias(dispatcher, node, "hp", PERMISSION_LEVEL);
     }
 
     private static int setHealth(ServerCommandSource source, Collection<? extends Entity> entities, float health) throws CommandSyntaxException {

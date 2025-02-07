@@ -11,7 +11,21 @@ public class AliasUtils {
         dispatcher.register(CommandManager.literal(alias).redirect(dispatcher.getRoot().getChild(original)));
     }
 
+    public static void createAlias(CommandDispatcher<ServerCommandSource> dispatcher, String original, String alias, int permissionLevel) {
+        dispatcher.register(CommandManager.literal(alias)
+                .redirect(dispatcher.getRoot().getChild(original))
+                .requires(source -> source.hasPermissionLevel(permissionLevel))
+        );
+    }
+
     public static void createAlias(CommandDispatcher<ServerCommandSource> dispatcher, LiteralCommandNode<ServerCommandSource> original, String alias) {
         dispatcher.register(CommandManager.literal(alias).redirect(original));
+    }
+
+    public static void createAlias(CommandDispatcher<ServerCommandSource> dispatcher, LiteralCommandNode<ServerCommandSource> original, String alias,  int permissionLevel) {
+        dispatcher.register(CommandManager.literal(alias)
+                .redirect(original)
+                .requires(source -> source.hasPermissionLevel(permissionLevel))
+        );
     }
 }
