@@ -1,5 +1,8 @@
 package com.thepinkhacker.commandsplus.world;
 
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.thepinkhacker.commandsplus.CommandsPlus;
 import net.minecraft.command.argument.TimeArgumentType;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
@@ -12,7 +15,7 @@ public class TimeRule extends GameRules.IntRule {
         super(rule, initialValue);
     }
 
-    public static GameRules.Type<GameRules.IntRule> create(
+    private static GameRules.Type<GameRules.IntRule> create(
             int initialValue,
             BiConsumer<MinecraftServer, GameRules.IntRule> changeCallback
     ) {
@@ -32,5 +35,16 @@ public class TimeRule extends GameRules.IntRule {
     @Override
     public String serialize() {
         return this.value + " ticks";
+    }
+
+    @Override
+    protected void deserialize(String raw) {
+        StringReader reader = new StringReader(raw);
+
+        try {
+            this.value = TimeArgumentType.time().parse(reader);
+        } catch (CommandSyntaxException e) {
+            CommandsPlus.LOGGER.warn("Failed to parse time {}", raw);
+        }
     }
 }
