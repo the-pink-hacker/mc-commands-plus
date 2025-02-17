@@ -62,7 +62,7 @@ public class NameCommand implements CommandRegistrationCallback {
                 ItemStack itemStack = stackReference.get();
 
                 if (!itemStack.isEmpty()) {
-                    itemStack.set(DataComponentTypes.CUSTOM_NAME, Text.of(name));
+                    itemStack.set(DataComponentTypes.ITEM_NAME, Text.of(name));
                     i++;
                 }
             }
