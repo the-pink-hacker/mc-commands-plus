@@ -33,7 +33,7 @@ import java.util.Collection;
 public class HeadCommand implements CommandRegistrationCallback {
     private final int PERMISSION_LEVEL = 2;
 
-    private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.head.give.fail"));
+    private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.head.give.failed"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {

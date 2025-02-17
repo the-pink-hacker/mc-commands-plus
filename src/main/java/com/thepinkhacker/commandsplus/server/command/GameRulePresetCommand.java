@@ -54,7 +54,7 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
             source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         } else if (i == 0) {
-            source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.load.noChange", FilenameUtils.getBaseName(path.toString())), true);
+            source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.load.unchanged", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         }
 

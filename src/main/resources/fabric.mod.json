@@ -24,6 +24,9 @@
   "entrypoints": {
     "main": [
       "com.thepinkhacker.commandsplus.CommandsPlus"
+    ],
+    "fabric-datagen": [
+      "com.thepinkhacker.commandsplus.data.DataGenerator"
     ]
   },
   "mixins": [

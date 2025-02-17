@@ -84,10 +84,9 @@ public class HealthCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.health.set.success", health, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.health.set.success", health), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.health.set.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.health.set.failed")).create();
         }
 
         return i;
@@ -111,10 +110,9 @@ public class HealthCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.health.add.success", health, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.health.add.success", health), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.health.add.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.health.add.failed")).create();
         }
 
         return i;
@@ -133,7 +131,7 @@ public class HealthCommand implements CommandRegistrationCallback {
             return 1;
         }
 
-        throw new SimpleCommandExceptionType(Text.translatable("commands.health.query.fail")).create();
+        throw new SimpleCommandExceptionType(Text.translatable("commands.health.query.failed")).create();
     }
 
     private static int queryHealth(ServerCommandSource source) throws CommandSyntaxException {

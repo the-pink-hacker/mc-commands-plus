@@ -79,7 +79,7 @@ public class NameCommand implements CommandRegistrationCallback {
         if (i > 0) {
             source.sendFeedback(() -> Text.translatable("commands.name.item.success", name), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.name.item.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.name.item.failed")).create();
         }
 
         return i;
@@ -99,7 +99,7 @@ public class NameCommand implements CommandRegistrationCallback {
         if (i > 0) {
             source.sendFeedback(() -> Text.translatable("commands.name.entity.success", name), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.name.entity.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.name.entity.failed")).create();
         }
 
         return i;

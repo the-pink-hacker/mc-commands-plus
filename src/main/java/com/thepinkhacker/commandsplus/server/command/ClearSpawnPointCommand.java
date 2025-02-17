@@ -42,7 +42,7 @@ public class ClearSpawnPointCommand implements CommandRegistrationCallback {
             int finalI = i;
             source.sendFeedback(() -> Text.translatable("commands.clearspawnpoint.success", finalI), true);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.clearspawnpoint.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.clearspawnpoint.failed")).create();
         }
 
         return i;

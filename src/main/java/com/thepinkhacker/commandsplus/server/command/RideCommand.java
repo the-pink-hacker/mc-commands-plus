@@ -29,11 +29,11 @@ import java.util.Collection;
 public class RideCommand implements CommandRegistrationCallback {
     private final int PERMISSION_LEVEL = 2;
 
-    private static final SimpleCommandExceptionType START_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.start_riding.fail"));
-    private static final SimpleCommandExceptionType STOP_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.stop_riding.fail"));
-    private static final SimpleCommandExceptionType EVICT_RIDERS_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.evict_riders.fail"));
-    private static final SimpleCommandExceptionType SUMMON_RIDER_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.summon_rider.fail"));
-    private static final SimpleCommandExceptionType SUMMON_RIDE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.summon_ride.fail"));
+    private static final SimpleCommandExceptionType START_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.start_riding.failed"));
+    private static final SimpleCommandExceptionType STOP_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.stop_riding.failed"));
+    private static final SimpleCommandExceptionType EVICT_RIDERS_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.evict_riders.failed"));
+    private static final SimpleCommandExceptionType SUMMON_RIDER_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.summon_rider.failed"));
+    private static final SimpleCommandExceptionType SUMMON_RIDE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.cpride.summon_ride.failed"));
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.summon.failed.uuid"));
 
     @Override
@@ -124,11 +124,8 @@ public class RideCommand implements CommandRegistrationCallback {
             ride = rider;
         }
 
-        if (i > 1) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.cpride.start_riding.success.multiple", finalI), false);
-        } else if (i == 1) {
-            source.sendFeedback(() -> Text.translatable("commands.cpride.start_riding.success.single"), false);
+        if (i > 0) {
+            source.sendFeedback(() -> Text.translatable("commands.cpride.start_riding.success"), false);
         } else {
             throw START_RIDING_FAILED.create();
         }
@@ -160,11 +157,8 @@ public class RideCommand implements CommandRegistrationCallback {
             }
         }
 
-        if (i > 1) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.cpride.stop_riding.success.multiple", finalI), false);
-        } else if (i == 1) {
-            source.sendFeedback(() -> Text.translatable("commands.cpride.stop_riding.success.single"), false);
+        if (i > 0) {
+            source.sendFeedback(() -> Text.translatable("commands.cpride.stop_riding.success"), false);
         } else {
             throw STOP_RIDING_FAILED.create();
         }
@@ -186,11 +180,8 @@ public class RideCommand implements CommandRegistrationCallback {
             i++;
         }
 
-        if (i > 1) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.cpride.evict_riders.success.multiple", finalI), false);
-        } else if (i == 1) {
-            source.sendFeedback(() -> Text.translatable("commands.cpride.evict_riders.success.single"), false);
+        if (i > 0) {
+            source.sendFeedback(() -> Text.translatable("commands.cpride.evict_riders.success"), false);
         } else {
             throw EVICT_RIDERS_FAILED.create();
         }

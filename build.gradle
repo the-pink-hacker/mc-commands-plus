@@ -72,3 +72,9 @@ publishing {
 loom {
 	accessWidenerPath = file("src/main/resources/commandsplus.accesswidener")
 }
+
+fabricApi {
+	configureDataGeneration() {
+		client = true
+	}
+}

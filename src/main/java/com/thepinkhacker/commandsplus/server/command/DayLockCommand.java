@@ -41,7 +41,8 @@ public class DayLockCommand implements CommandRegistrationCallback {
         // Bedrock is weird
         if (dayLock) source.getWorld().setTimeOfDay(6_000);
 
-        source.sendFeedback(() -> Text.translatable("commands.daylock.success", !dayLock), true);
+        String key = dayLock ? "commands.daylock.enabled" : "commands.daylock.disabled";
+        source.sendFeedback(() -> Text.translatable(key), true);
 
         // Return 1 only if the value changes
         return rules.getBoolean(GameRules.DO_DAYLIGHT_CYCLE) == dayLock ? 1 : 0;

@@ -207,10 +207,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.hunger.set.food.success", food, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.hunger.set.food.success", food), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.food.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.food.failed")).create();
         }
 
         return i;
@@ -232,10 +231,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.hunger.set.exhaustion.success", exhaustion, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.hunger.set.exhaustion.success", exhaustion), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.exhaustion.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.exhaustion.failed")).create();
         }
 
         return i;
@@ -257,10 +255,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.hunger.set.saturation.success", saturation, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.hunger.set.saturation.success", saturation), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.saturation.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.saturation.failed")).create();
         }
 
         return i;
@@ -283,10 +280,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.hunger.add.food.success", food, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.hunger.add.food.success", food), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.food.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.food.failed")).create();
         }
 
         return i;
@@ -309,10 +305,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.hunger.add.exhaustion.success", exhaustion, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.hunger.add.exhaustion.success", exhaustion), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.exhaustion.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.exhaustion.failed")).create();
         }
 
         return i;
@@ -335,10 +330,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.hunger.add.saturation.success", saturation, finalI), false);
+            source.sendFeedback(() -> Text.translatable("commands.hunger.add.saturation.success", saturation), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.saturation.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.saturation.failed")).create();
         }
 
         return i;

@@ -57,7 +57,7 @@ public class SetOwnerCommand implements CommandRegistrationCallback {
         if (i > 0) {
             source.sendFeedback(() -> Text.translatable("commands.setowner.success", player.getDisplayName()), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.setowner.fail")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.setowner.failed")).create();
         }
 
         return i;
