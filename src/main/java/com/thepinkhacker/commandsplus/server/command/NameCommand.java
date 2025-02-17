@@ -32,9 +32,17 @@ public class NameCommand implements CommandRegistrationCallback {
                                                         context.getSource(),
                                                         EntityArgumentType.getEntities(context, "targets"),
                                                         ItemSlotArgumentType.getItemSlot(context, "slot"),
-                                                        MessageArgumentType.getMessage(context, "name").getString())
-                                                )
+                                                        MessageArgumentType.getMessage(context, "name").getString()
+                                                ))
                                         )
+                                )
+                                .then(CommandManager.argument("name", MessageArgumentType.message())
+                                        .executes(context -> nameItem(
+                                                context.getSource(),
+                                                EntityArgumentType.getEntities(context, "targets"),
+                                                0,
+                                                MessageArgumentType.getMessage(context, "name").getString()
+                                        ))
                                 )
                         )
                 )
@@ -44,8 +52,8 @@ public class NameCommand implements CommandRegistrationCallback {
                                         .executes(context -> nameEntity(
                                                 context.getSource(),
                                                 EntityArgumentType.getEntities(context, "targets"),
-                                                MessageArgumentType.getMessage(context, "name").getString())
-                                        )
+                                                MessageArgumentType.getMessage(context, "name").getString()
+                                        ))
                                 )
                         )
                 )
