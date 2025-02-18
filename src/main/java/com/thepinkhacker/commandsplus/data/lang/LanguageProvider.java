@@ -1,5 +1,7 @@
 package com.thepinkhacker.commandsplus.data.lang;
 
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.thepinkhacker.commandsplus.server.command.NameCommand;
 import com.thepinkhacker.commandsplus.world.GameRuleManager;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -15,24 +17,29 @@ public class LanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup lookup, TranslationBuilder builder) {
-        addGamerule(
+        add(
                 builder,
                 GameRuleManager.DO_ENDERMAN_PICKUP,
                 "Do Enderman Pickup",
                 "Allow Endermen to pickup blocks."
         );
-        addGamerule(
+        add(
                 builder,
                 GameRuleManager.DO_ENDERMAN_PLACE,
                 "Do Enderman Place",
                 "Allow Endermen to place blocks."
         );
-        addGamerule(
+        add(
                 builder,
                 GameRuleManager.ITEM_DESPAWN_AGE,
                 "Item Despawn Age",
                 "Controls how long it takes for an item to despawn."
         );
+
+        add(builder, NameCommand.ENTITY_FAILED, "Failed to name entity");
+        add(builder, NameCommand.ENTITY_REMOVE_FAILED, "Failed to remove entity name");
+        add(builder, NameCommand.ITEM_FAILED, "Failed to name item");
+        add(builder, NameCommand.ITEM_REMOVE_FAILED, "Failed to remove item name");
 
         GenericTranslationBuilder.of(builder)
                 .child(GenericTranslationBuilder.Node.of("commands")
@@ -160,14 +167,14 @@ public class LanguageProvider extends FabricLanguageProvider {
                         )
                         .child(GenericTranslationBuilder.Node.of("name")
                                 .child(GenericTranslationBuilder.Node.of("entity")
-                                        .child("failed", "Failed to name entity")
                                         // TODO: Color name
-                                        .child("success", "Named entity to \"%s\"")
+                                        .child("name.success", "Named entity to \"%s\"")
+                                        .child("remove.success", "Removed entity name")
                                 )
                                 .child(GenericTranslationBuilder.Node.of("item")
-                                        .child("failed", "Failed to name item")
                                         // TODO: Color name
-                                        .child("success", "Named item to \"%s\"")
+                                        .child("name.success", "Named item to \"%s\"")
+                                        .child("remove.success", "Removed item name")
                                 )
                         )
                         .child(GenericTranslationBuilder.Node.of("setowner")
@@ -181,17 +188,21 @@ public class LanguageProvider extends FabricLanguageProvider {
                 .build();
     }
 
-    private static void addGamerule(
+    private static void add(
             TranslationBuilder builder,
             GameRules.Key<?> gamerule,
             String title,
             String description
     ) {
-        addGamerule(builder, gamerule, title);
+        add(builder, gamerule, title);
         builder.add(gamerule.getTranslationKey() + ".description", description);
     }
     
-    private static void addGamerule(TranslationBuilder builder, GameRules.Key<?> gamerule, String title) {
+    private static void add(TranslationBuilder builder, GameRules.Key<?> gamerule, String title) {
         builder.add(gamerule.getTranslationKey(), title);
+    }
+
+    private static void add(TranslationBuilder builder, SimpleCommandExceptionType exception, String value) {
+        builder.add(exception.toString(), value);
     }
 }
