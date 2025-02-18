@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "commandsplus",
+  "id": "decree",
   "version": "${version}",
-  "name": "Commands+",
-  "description": "A Mod that adds new helpful commands to Minecraft.",
+  "name": "Decree",
+  "description": "Adds a variety of helpful commands and gamerules.",
   "authors": [
     {
       "name": "The Pink Hacker",
@@ -14,25 +14,25 @@
     }
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/commandsplus",
-    "sources": "https://github.thepinkhacker.com/mc-commands-plus",
-    "issues": "https://github.thepinkhacker.com/mc-commands-plus/issues"
+    "homepage": "https://modrinth.com/mod/decree",
+    "sources": "https://github.thepinkhacker.com/decree",
+    "issues": "https://github.thepinkhacker.com/decree/issues"
   },
   "license": "LGPL-v3.0",
-  "icon": "assets/commandsplus/icons/icon.png",
+  "icon": "assets/decree/icons/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.thepinkhacker.commandsplus.CommandsPlus"
+      "com.thepinkhacker.decree.Decree"
     ],
     "fabric-datagen": [
-      "com.thepinkhacker.commandsplus.data.DataGenerator"
+      "com.thepinkhacker.decree.data.DataGenerator"
     ]
   },
   "mixins": [
-    "commandsplus.mixins.json"
+    "decree.mixins.json"
   ],
-  "accessWidener": "commandsplus.accesswidener",
+  "accessWidener": "decree.accesswidener",
   "depends": {
     "fabricloader": ">=0.15.11",
     "fabric-api": "*",

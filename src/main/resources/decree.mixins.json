@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.thepinkhacker.decree.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "entity.ItemEntityMixin",
+    "entity.mob.EndermanEntityPickUpBlockGoalMixin",
+    "entity.mob.EndermanEntityPlaceBlockGoalMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

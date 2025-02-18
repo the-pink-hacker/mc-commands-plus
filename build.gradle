@@ -70,7 +70,7 @@ publishing {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/commandsplus.accesswidener")
+	accessWidenerPath = file("src/main/resources/decree.accesswidener")
 }
 
 fabricApi {
