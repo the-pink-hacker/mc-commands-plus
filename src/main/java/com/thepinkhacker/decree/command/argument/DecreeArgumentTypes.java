@@ -4,7 +4,7 @@ import com.thepinkhacker.decree.Decree;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 
-public class ArgumentTypeManager {
+public class DecreeArgumentTypes {
     public static void register() {
         Decree.LOGGER.info("Registering argument types");
         ArgumentTypeRegistry.registerArgumentType(

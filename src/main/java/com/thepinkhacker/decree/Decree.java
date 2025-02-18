@@ -1,7 +1,7 @@
 package com.thepinkhacker.decree;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.thepinkhacker.decree.command.argument.ArgumentTypeManager;
+import com.thepinkhacker.decree.command.argument.DecreeArgumentTypes;
 import com.thepinkhacker.decree.server.command.*;
 import com.thepinkhacker.decree.server.dedicated.command.StopCommand;
 import com.thepinkhacker.decree.server.dedicated.command.CommandRegistrationCallbackDedicated;
@@ -21,7 +21,7 @@ public class Decree implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ArgumentTypeManager.register();
+        DecreeArgumentTypes.register();
         DecreeGameRules.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {

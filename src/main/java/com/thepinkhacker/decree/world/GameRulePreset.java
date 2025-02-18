@@ -48,8 +48,6 @@ public class GameRulePreset {
     public static int load(Path path, ServerCommandSource source) {
         AtomicInteger i = new AtomicInteger();
 
-        if (!Files.exists(path)) return i.get();
-
         Gson gson = new Gson();
 
         String data;
@@ -59,8 +57,6 @@ public class GameRulePreset {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        if (data == null) return -1;
 
         JsonObject root = gson.fromJson(data, JsonObject.class);
         JsonElement element = root.get("gamerules");
