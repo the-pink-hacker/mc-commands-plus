@@ -144,7 +144,7 @@ public class NameCommand implements CommandRegistrationCallback {
             ItemStack stack = livingEntity.getMainHandStack();
             return nameItemTarget(stack, name);
         } else {
-            return false;
+            return nameItemTarget(entity, 0, name);
         }
     }
 
