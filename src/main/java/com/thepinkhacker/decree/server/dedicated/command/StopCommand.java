@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
@@ -13,13 +14,13 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-public class CPStopCommand implements CommandRegistrationCallbackDedicated {
+public class StopCommand implements CommandRegistrationCallbackDedicated {
     private static volatile int timeLeft;
-    private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("commands.cpstop.cancel.failed"));
+    private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("commands.decree.stop.cancel.failed"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(CommandManager.literal("cpstop")
+        DecreeUtils.register(dispatcher, "stop", true, command -> command
                 .requires(source -> source.hasPermissionLevel(4))
                 .then(CommandManager.literal("cancel")
                         .executes(context -> cancel())
@@ -48,13 +49,13 @@ public class CPStopCommand implements CommandRegistrationCallbackDedicated {
                 for (int i = 0; i < seconds; i++) {
                     // Cancel
                     if (timeLeft == -1) {
-                        sendServerMessage(playerManager, source, Text.translatable("commands.cpstop.cancel.success"));
+                        sendServerMessage(playerManager, source, Text.translatable("commands.decree.stop.cancel.success"));
                         return;
                     }
 
                     timeLeft = seconds - i;
 
-                    if (timeLeft <= 10 || timeLeft % 10 == 0) sendServerMessage(playerManager, source, Text.translatable("commands.cpstop.time", timeLeft));
+                    if (timeLeft <= 10 || timeLeft % 10 == 0) sendServerMessage(playerManager, source, Text.translatable("commands.decree.stop.time", timeLeft));
 
                     try {
                         Thread.sleep(1000L);
@@ -63,13 +64,13 @@ public class CPStopCommand implements CommandRegistrationCallbackDedicated {
                     }
                 }
 
-                sendServerMessage(playerManager, source, Text.translatable("commands.cpstop.stop", seconds));
+                sendServerMessage(playerManager, source, Text.translatable("commands.decree.stop.stop", seconds));
                 server.stop(false);
             }, "Server stop thread");
 
             thread.start();
         } else {
-            source.sendFeedback(() -> Text.translatable("commands.cpstop.immediate"), true);
+            source.sendFeedback(() -> Text.translatable("commands.decree.stop.immediate"), true);
             server.stop(false);
         }
 

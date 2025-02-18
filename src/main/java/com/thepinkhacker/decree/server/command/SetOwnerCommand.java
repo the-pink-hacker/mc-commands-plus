@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.thepinkhacker.decree.util.command.AliasUtils;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -22,7 +22,7 @@ public class SetOwnerCommand implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("setowner")
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "setowner", command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.argument("pets", EntityArgumentType.entities())
                         .then(CommandManager.argument("player", EntityArgumentType.player())
@@ -39,7 +39,7 @@ public class SetOwnerCommand implements CommandRegistrationCallback {
                 )
         );
 
-        AliasUtils.createAlias(dispatcher, node, "tame", PERMISSION_LEVEL);
+        DecreeUtils.createAlias(dispatcher, node, "tame", PERMISSION_LEVEL);
     }
 
     private static int setOwner(ServerCommandSource source, Collection<? extends Entity> entities, ServerPlayerEntity player) throws CommandSyntaxException {
@@ -55,9 +55,9 @@ public class SetOwnerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.setowner.success", player.getDisplayName()), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.setowner.success", player.getDisplayName()), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.setowner.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.setowner.failed")).create();
         }
 
         return i;

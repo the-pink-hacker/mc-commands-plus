@@ -3,6 +3,7 @@ package com.thepinkhacker.decree.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -20,10 +21,10 @@ import net.minecraft.text.Text;
 import java.util.Collection;
 
 public class NameCommand implements CommandRegistrationCallback {
-    public static final SimpleCommandExceptionType ITEM_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.name.item.name.failed"));
-    public static final SimpleCommandExceptionType ITEM_REMOVE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.name.item.remove.failed"));
-    public static final SimpleCommandExceptionType ENTITY_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.name.entity.name.failed"));
-    public static final SimpleCommandExceptionType ENTITY_REMOVE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.name.entity.remove.failed"));
+    public static final SimpleCommandExceptionType ITEM_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.item.name.failed"));
+    public static final SimpleCommandExceptionType ITEM_REMOVE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.item.remove.failed"));
+    public static final SimpleCommandExceptionType ENTITY_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.entity.name.failed"));
+    public static final SimpleCommandExceptionType ENTITY_REMOVE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.entity.remove.failed"));
 
     @Override
     public void register(
@@ -31,7 +32,7 @@ public class NameCommand implements CommandRegistrationCallback {
             CommandRegistryAccess registryAccess,
             CommandManager.RegistrationEnvironment environment
     ) {
-        dispatcher.register(CommandManager.literal("name")
+        DecreeUtils.register(dispatcher, "name", command -> command
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("item")
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
@@ -96,7 +97,7 @@ public class NameCommand implements CommandRegistrationCallback {
 
         if (i > 0) {
             source.sendFeedback(
-                    () -> Text.translatable("commands.name.item.name.success", name),
+                    () -> Text.translatable("commands.decree.name.item.name.success", name),
                     false
             );
             return i;
@@ -121,7 +122,7 @@ public class NameCommand implements CommandRegistrationCallback {
 
         if (i > 0) {
             source.sendFeedback(
-                    () -> Text.translatable("commands.name.item.name.success", name),
+                    () -> Text.translatable("commands.decree.name.item.name.success", name),
                     false
             );
             return i;
@@ -167,7 +168,7 @@ public class NameCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.name.item.remove.success"), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.name.item.remove.success"), false);
             return i;
         } else {
             throw ITEM_REMOVE_FAILED.create();
@@ -188,7 +189,7 @@ public class NameCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.name.item.remove.success"), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.name.item.remove.success"), false);
             return i;
         } else {
             throw ITEM_REMOVE_FAILED.create();
@@ -235,7 +236,7 @@ public class NameCommand implements CommandRegistrationCallback {
 
         if (i > 0) {
             source.sendFeedback(
-                    () -> Text.translatable("commands.name.entity.name.success", name),
+                    () -> Text.translatable("commands.decree.name.entity.name.success", name),
                     false
             );
             return i;
@@ -260,7 +261,7 @@ public class NameCommand implements CommandRegistrationCallback {
 
         if (i > 0) {
             source.sendFeedback(
-                    () -> Text.translatable("commands.name.entity.remove.success"),
+                    () -> Text.translatable("commands.decree.name.entity.remove.success"),
                     false
             );
             return i;

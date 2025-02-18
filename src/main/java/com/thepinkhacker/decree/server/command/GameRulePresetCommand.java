@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.thepinkhacker.decree.command.argument.GameRulePresetArgumentType;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import com.thepinkhacker.decree.world.GameRulePreset;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
@@ -15,11 +16,11 @@ import org.apache.commons.io.FilenameUtils;
 import java.nio.file.Path;
 
 public class GameRulePresetCommand implements CommandRegistrationCallback {
-    private static final DynamicCommandExceptionType FAILED_TO_LOAD_EXCEPTION = new DynamicCommandExceptionType(preset -> Text.translatable("commands.gamerulepreset.load.fail", preset));
+    private static final DynamicCommandExceptionType FAILED_TO_LOAD_EXCEPTION = new DynamicCommandExceptionType(preset -> Text.translatable("commands.decree.gamerulepreset.load.fail", preset));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(CommandManager.literal("gamerulepreset")
+        DecreeUtils.register(dispatcher, "gamerulepreset", command -> command
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("save")
                         .requires(source -> source.hasPermissionLevel(4))
@@ -43,7 +44,7 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
 
     private static int save(ServerCommandSource source, Path path) {
         GameRulePreset.save(path, source.getWorld());
-        source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.save.success", FilenameUtils.getBaseName(path.toString())), true);
+        source.sendFeedback(() -> Text.translatable("commands.decree.gamerulepreset.save.success", FilenameUtils.getBaseName(path.toString())), true);
         return 1;
     }
 
@@ -51,10 +52,10 @@ public class GameRulePresetCommand implements CommandRegistrationCallback {
         int i = GameRulePreset.load(path, source);
 
         if (i >= 1) {
-            source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
+            source.sendFeedback(() -> Text.translatable("commands.decree.gamerulepreset.load.success", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         } else if (i == 0) {
-            source.sendFeedback(() -> Text.translatable("commands.gamerulepreset.load.unchanged", FilenameUtils.getBaseName(path.toString())), true);
+            source.sendFeedback(() -> Text.translatable("commands.decree.gamerulepreset.load.unchanged", FilenameUtils.getBaseName(path.toString())), true);
             return i;
         }
 

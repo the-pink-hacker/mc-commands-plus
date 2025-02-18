@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.thepinkhacker.decree.util.command.AliasUtils;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -23,7 +23,7 @@ public class HealthCommand implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("health")
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "health", command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.argument("health", FloatArgumentType.floatArg(0.0f))
@@ -70,7 +70,7 @@ public class HealthCommand implements CommandRegistrationCallback {
                 )
         );
 
-        AliasUtils.createAlias(dispatcher, node, "hp", PERMISSION_LEVEL);
+        DecreeUtils.createAlias(dispatcher, node, "hp", PERMISSION_LEVEL);
     }
 
     private static int setHealth(ServerCommandSource source, Collection<? extends Entity> entities, float health) throws CommandSyntaxException {
@@ -84,9 +84,9 @@ public class HealthCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.health.set.success", health), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.health.set.success", health), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.health.set.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.health.set.failed")).create();
         }
 
         return i;
@@ -110,9 +110,9 @@ public class HealthCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.health.add.success", health), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.health.add.success", health), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.health.add.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.health.add.failed")).create();
         }
 
         return i;
@@ -127,11 +127,11 @@ public class HealthCommand implements CommandRegistrationCallback {
 
     private static int queryHealth(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
         if (entity instanceof LivingEntity livingEntity) {
-            source.sendFeedback(() -> Text.translatable("commands.health.query.success", livingEntity.getHealth()), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.health.query.success", livingEntity.getHealth()), false);
             return 1;
         }
 
-        throw new SimpleCommandExceptionType(Text.translatable("commands.health.query.failed")).create();
+        throw new SimpleCommandExceptionType(Text.translatable("commands.decree.health.query.failed")).create();
     }
 
     private static int queryHealth(ServerCommandSource source) throws CommandSyntaxException {

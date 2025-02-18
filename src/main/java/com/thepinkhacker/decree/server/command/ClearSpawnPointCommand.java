@@ -3,6 +3,7 @@ package com.thepinkhacker.decree.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -18,7 +19,7 @@ import java.util.Collection;
 public class ClearSpawnPointCommand implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(CommandManager.literal("clearspawnpoint")
+        DecreeUtils.register(dispatcher, "clearspawnpoint", command -> command
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                         .executes(context -> clearSpawnPoint(
@@ -40,9 +41,9 @@ public class ClearSpawnPointCommand implements CommandRegistrationCallback {
 
         if (i > 0) {
             int finalI = i;
-            source.sendFeedback(() -> Text.translatable("commands.clearspawnpoint.success", finalI), true);
+            source.sendFeedback(() -> Text.translatable("commands.decree.clearspawnpoint.success", finalI), true);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.clearspawnpoint.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.clearspawnpoint.failed")).create();
         }
 
         return i;

@@ -3,7 +3,7 @@ package com.thepinkhacker.decree.server.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.thepinkhacker.decree.util.command.AliasUtils;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
@@ -15,7 +15,7 @@ public class DayLockCommand implements CommandRegistrationCallback {
     private final int PERMISSION_LEVEL = 2;
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("daylock")
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "daylock", command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.argument("lock", BoolArgumentType.bool())
                         .executes(context -> execute(
@@ -29,7 +29,7 @@ public class DayLockCommand implements CommandRegistrationCallback {
                 ))
         );
 
-        AliasUtils.createAlias(dispatcher, node, "alwaysday", PERMISSION_LEVEL);
+        DecreeUtils.createAlias(dispatcher, node, "alwaysday", PERMISSION_LEVEL);
     }
 
     private static int execute(ServerCommandSource source, boolean dayLock) {
@@ -41,7 +41,7 @@ public class DayLockCommand implements CommandRegistrationCallback {
         // Bedrock is weird
         if (dayLock) source.getWorld().setTimeOfDay(6_000);
 
-        String key = dayLock ? "commands.daylock.enabled" : "commands.daylock.disabled";
+        String key = dayLock ? "commands.decree.daylock.enabled" : "commands.decree.daylock.disabled";
         source.sendFeedback(() -> Text.translatable(key), true);
 
         // Return 1 only if the value changes

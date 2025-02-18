@@ -6,7 +6,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.thepinkhacker.decree.util.command.AliasUtils;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -25,7 +25,7 @@ public class HungerCommand implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("hunger")
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "hunger", command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.literal("food")
@@ -195,7 +195,7 @@ public class HungerCommand implements CommandRegistrationCallback {
                 )
         );
 
-        AliasUtils.createAlias(dispatcher, node, "food", PERMISSION_LEVEL);
+        DecreeUtils.createAlias(dispatcher, node, "food", PERMISSION_LEVEL);
     }
 
     private static int setFood(ServerCommandSource source, Collection<ServerPlayerEntity> players, int food) throws CommandSyntaxException {
@@ -207,9 +207,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.hunger.set.food.success", food), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.hunger.set.food.success", food), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.food.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.hunger.set.food.failed")).create();
         }
 
         return i;
@@ -231,9 +231,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.hunger.set.exhaustion.success", exhaustion), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.hunger.set.exhaustion.success", exhaustion), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.exhaustion.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.hunger.set.exhaustion.failed")).create();
         }
 
         return i;
@@ -255,9 +255,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.hunger.set.saturation.success", saturation), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.hunger.set.saturation.success", saturation), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.set.saturation.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.hunger.set.saturation.failed")).create();
         }
 
         return i;
@@ -280,9 +280,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.hunger.add.food.success", food), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.hunger.add.food.success", food), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.food.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.hunger.add.food.failed")).create();
         }
 
         return i;
@@ -305,9 +305,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.hunger.add.exhaustion.success", exhaustion), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.hunger.add.exhaustion.success", exhaustion), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.exhaustion.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.hunger.add.exhaustion.failed")).create();
         }
 
         return i;
@@ -330,9 +330,9 @@ public class HungerCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.hunger.add.saturation.success", saturation), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.hunger.add.saturation.success", saturation), false);
         } else {
-            throw new SimpleCommandExceptionType(Text.translatable("commands.hunger.add.saturation.failed")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("commands.decree.hunger.add.saturation.failed")).create();
         }
 
         return i;
@@ -347,7 +347,7 @@ public class HungerCommand implements CommandRegistrationCallback {
 
     private static int queryFood(ServerCommandSource source, ServerPlayerEntity player) {
         int hunger = player.getHungerManager().getFoodLevel();
-        source.sendFeedback(() -> Text.translatable("commands.hunger.query.food.success", hunger), false);
+        source.sendFeedback(() -> Text.translatable("commands.decree.hunger.query.food.success", hunger), false);
         return hunger > 0 ? 1 : 0;
     }
 
@@ -357,7 +357,7 @@ public class HungerCommand implements CommandRegistrationCallback {
 
     private static int queryExhaustion(ServerCommandSource source, ServerPlayerEntity player) {
         float exhaustion = player.getHungerManager().exhaustion;
-        source.sendFeedback(() -> Text.translatable("commands.hunger.query.exhaustion.success", exhaustion), false);
+        source.sendFeedback(() -> Text.translatable("commands.decree.hunger.query.exhaustion.success", exhaustion), false);
         return exhaustion > 0 ? 1 : 0;
     }
 
@@ -367,7 +367,7 @@ public class HungerCommand implements CommandRegistrationCallback {
 
     private static int querySaturation(ServerCommandSource source, ServerPlayerEntity player) {
         float saturation = player.getHungerManager().getSaturationLevel();
-        source.sendFeedback(() -> Text.translatable("commands.hunger.query.saturation.success", saturation), false);
+        source.sendFeedback(() -> Text.translatable("commands.decree.hunger.query.saturation.success", saturation), false);
         return saturation > 0 ? 1 : 0;
     }
 

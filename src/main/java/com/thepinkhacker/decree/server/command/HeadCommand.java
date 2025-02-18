@@ -5,7 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.thepinkhacker.decree.util.command.AliasUtils;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.command.CommandRegistryAccess;
@@ -33,11 +33,11 @@ import java.util.Collection;
 public class HeadCommand implements CommandRegistrationCallback {
     private final int PERMISSION_LEVEL = 2;
 
-    private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.head.give.failed"));
+    private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.decree.head.give.failed"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager.literal("head")
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "head", command -> command
                 .then(CommandManager.literal("give")
                         .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
@@ -88,7 +88,7 @@ public class HeadCommand implements CommandRegistrationCallback {
                 )
         );
 
-        AliasUtils.createAlias(dispatcher, node, "skull");
+        DecreeUtils.createAlias(dispatcher, node, "skull");
     }
 
     private static int give(ServerCommandSource source, Collection<ServerPlayerEntity> targets, Collection<GameProfile> profiles) throws CommandSyntaxException {
@@ -105,7 +105,7 @@ public class HeadCommand implements CommandRegistrationCallback {
         }
 
         if (i > 0) {
-            source.sendFeedback(() -> Text.translatable("commands.head.give.success"), false);
+            source.sendFeedback(() -> Text.translatable("commands.decree.head.give.success"), false);
         } else {
             throw GIVE_EXCEPTION.create();
         }
@@ -133,7 +133,7 @@ public class HeadCommand implements CommandRegistrationCallback {
             ProfileComponent owner = head.getOwner();
 
             if (owner != null) {
-                source.sendFeedback(() -> copyText("commands.head.query.uuid.success", owner.gameProfile().getId().toString()), false);
+                source.sendFeedback(() -> copyText("commands.decree.head.query.uuid.success", owner.gameProfile().getId().toString()), false);
                 i = 1;
             }
         }
@@ -150,7 +150,7 @@ public class HeadCommand implements CommandRegistrationCallback {
             ProfileComponent owner = head.getOwner();
 
             if (owner != null) {
-                source.sendFeedback(() -> copyText("commands.head.query.name.success", owner.gameProfile().getName()), false);
+                source.sendFeedback(() -> copyText("commands.decree.head.query.name.success", owner.gameProfile().getName()), false);
                 i = 1;
             }
         }

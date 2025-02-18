@@ -3,9 +3,9 @@ package com.thepinkhacker.decree;
 import com.mojang.brigadier.CommandDispatcher;
 import com.thepinkhacker.decree.command.argument.ArgumentTypeManager;
 import com.thepinkhacker.decree.server.command.*;
-import com.thepinkhacker.decree.server.dedicated.command.CPStopCommand;
+import com.thepinkhacker.decree.server.dedicated.command.StopCommand;
 import com.thepinkhacker.decree.server.dedicated.command.CommandRegistrationCallbackDedicated;
-import com.thepinkhacker.decree.util.command.AliasUtils;
+import com.thepinkhacker.decree.util.command.DecreeUtils;
 import com.thepinkhacker.decree.world.DecreeGameRules;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -39,12 +39,12 @@ public class Decree implements ModInitializer {
                     new RideCommand(),
                     new SetOwnerCommand(),
                     new ToggleDownfallCommand(),
-                    new CPStopCommand()
+                    new StopCommand()
             );
 
             // Aliases
-            AliasUtils.createAlias(dispatcher, "gamemode", "gm", 2);
-            AliasUtils.createAlias(dispatcher, "help", "?");
+            DecreeUtils.createAlias(dispatcher, "gamemode", "gm", 2);
+            DecreeUtils.createAlias(dispatcher, "help", "?");
 
             LOGGER.info("Registered commands+.");
         });
