@@ -7,7 +7,6 @@ import com.thepinkhacker.decree.Decree;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class DecreeUtils {
