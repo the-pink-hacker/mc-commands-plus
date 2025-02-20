@@ -5,7 +5,6 @@ import com.thepinkhacker.decree.command.argument.DecreeArgumentTypes;
 import com.thepinkhacker.decree.server.command.*;
 import com.thepinkhacker.decree.server.dedicated.command.CommandRegistrationCallbackDedicated;
 import com.thepinkhacker.decree.server.dedicated.command.StopCommand;
-import com.thepinkhacker.decree.util.command.DecreeUtils;
 import com.thepinkhacker.decree.world.DecreeGameRules;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -42,10 +41,6 @@ public class Decree implements ModInitializer {
                     new ToggleDownfallCommand(),
                     new StopCommand()
             );
-
-            // Aliases
-            DecreeUtils.createAlias(dispatcher, "gamemode", "gm", 2);
-            DecreeUtils.createAlias(dispatcher, "help", "?");
 
             LOGGER.info("Registered commands+.");
         });

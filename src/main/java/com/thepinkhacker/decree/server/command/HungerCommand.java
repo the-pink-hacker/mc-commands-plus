@@ -21,12 +21,10 @@ import java.util.Collection;
 import java.util.Objects;
 
 public class HungerCommand implements CommandRegistrationCallback {
-    private final int PERMISSION_LEVEL = 2;
-
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.HUNGER, PERMISSION_LEVEL, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.HUNGER, command -> command
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.literal("food")
                                 .then(CommandManager.argument("food", IntegerArgumentType.integer(0))

@@ -5,7 +5,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.thepinkhacker.decree.data.command.CommandConfig;
 import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.entity.SkullBlockEntity;
@@ -32,15 +31,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class HeadCommand implements CommandRegistrationCallback {
-    private final int PERMISSION_LEVEL = 2;
 
     private static final SimpleCommandExceptionType GIVE_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.decree.head.give.failed"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.HEAD, PERMISSION_LEVEL, command -> command
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.HEAD, command -> command
                 .then(CommandManager.literal("give")
-                        .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
+                        .requires(source -> source.hasPermissionLevel(2))
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
                                 .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
                                         .executes(context -> give(

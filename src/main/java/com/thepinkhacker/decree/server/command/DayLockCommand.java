@@ -12,12 +12,10 @@ import net.minecraft.text.Text;
 import net.minecraft.world.GameRules;
 
 public class DayLockCommand implements CommandRegistrationCallback {
-    private final int PERMISSION_LEVEL = 2;
-
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.DAY_LOCK, PERMISSION_LEVEL, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.DAY_LOCK, command -> command
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("lock", BoolArgumentType.bool())
                         .executes(context -> execute(
                                 context.getSource(),

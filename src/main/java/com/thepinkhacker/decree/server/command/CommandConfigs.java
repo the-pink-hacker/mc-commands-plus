@@ -11,27 +11,27 @@ import net.minecraft.util.Identifier;
 
 public class CommandConfigs {
     public static final RegistryKey<CommandConfig> CLEAR_SPAWN_POINT = register("clearspawnpoint");
-    public static final RegistryKey<CommandConfig> DAY_LOCK = register("daylock", "alwaysday");
+    public static final RegistryKey<CommandConfig> DAY_LOCK = register("daylock");
     public static final RegistryKey<CommandConfig> GAME_RULE_PRESET = register("gamerulepreset");
-    public static final RegistryKey<CommandConfig> HEAD = register("head", "skull");
-    public static final RegistryKey<CommandConfig> HEALTH = register("health", "hp");
-    public static final RegistryKey<CommandConfig> HUNGER = register("hunger", "food");
+    public static final RegistryKey<CommandConfig> HEAD = register("head");
+    public static final RegistryKey<CommandConfig> HEALTH = register("health");
+    public static final RegistryKey<CommandConfig> HUNGER = register("hunger");
     public static final RegistryKey<CommandConfig> NAME = register("name");
-    public static final RegistryKey<CommandConfig> RIDE = register("ride", false, "mount");
+    public static final RegistryKey<CommandConfig> RIDE = register("ride", false);
     public static final RegistryKey<CommandConfig> SET_OWNER = register("setowner");
     public static final RegistryKey<CommandConfig> TOGGLE_DOWNFALL = register("toggledownfall");
     public static final RegistryKey<CommandConfig> STOP = register("stop", false);
 
-    private static RegistryKey<CommandConfig> register(String id, String... aliases) {
-        return register(id, true, aliases);
+    private static RegistryKey<CommandConfig> register(String id) {
+        return register(id, true);
     }
 
-    private static RegistryKey<CommandConfig> register(String id, boolean prefixOptional, String... aliases) {
+    private static RegistryKey<CommandConfig> register(String id, boolean prefixOptional) {
         Identifier decreeId = Decree.id(id);
         Registry.register(
                 DecreeRegistries.COMMAND_CONFIG,
                 decreeId,
-                CommandConfig.of(CommandPrefix.of(decreeId.getNamespace(), prefixOptional), aliases)
+                CommandConfig.of(CommandPrefix.of(decreeId.getNamespace(), prefixOptional))
         );
         return RegistryKey.of(DecreeRegistryKeys.COMMAND_CONFIG, decreeId);
     }

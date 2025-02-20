@@ -18,12 +18,10 @@ import net.minecraft.text.Text;
 import java.util.Collection;
 
 public class SetOwnerCommand implements CommandRegistrationCallback {
-    private final int PERMISSION_LEVEL = 2;
-
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.SET_OWNER, PERMISSION_LEVEL, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.SET_OWNER, command -> command
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("pets", EntityArgumentType.entities())
                         .then(CommandManager.argument("player", EntityArgumentType.player())
                                 .executes(context -> setOwner(
@@ -38,8 +36,6 @@ public class SetOwnerCommand implements CommandRegistrationCallback {
                         )
                 )
         );
-
-        DecreeUtils.createAlias(dispatcher, node, "tame", PERMISSION_LEVEL);
     }
 
     private static int setOwner(ServerCommandSource source, Collection<? extends Entity> entities, ServerPlayerEntity player) throws CommandSyntaxException {

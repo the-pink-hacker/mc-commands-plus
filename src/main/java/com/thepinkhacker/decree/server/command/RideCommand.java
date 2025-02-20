@@ -27,7 +27,6 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Collection;
 
 public class RideCommand implements CommandRegistrationCallback {
-    private final int PERMISSION_LEVEL = 2;
     private static final SimpleCommandExceptionType START_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.ride.start_riding.failed"));
     private static final SimpleCommandExceptionType STOP_RIDING_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.ride.stop_riding.failed"));
     private static final SimpleCommandExceptionType EVICT_RIDERS_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.ride.evict_riders.failed"));
@@ -42,8 +41,8 @@ public class RideCommand implements CommandRegistrationCallback {
          *  - nameTag
          *  - rideRules
          */
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.RIDE, PERMISSION_LEVEL, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.RIDE, command -> command
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("riders", EntityArgumentType.entities())
                         .then(CommandManager.literal("start_riding")
                                 .then(CommandManager.argument("ride", EntityArgumentType.entity())

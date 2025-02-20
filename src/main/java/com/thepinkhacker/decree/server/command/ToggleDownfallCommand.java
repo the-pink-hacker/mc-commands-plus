@@ -10,12 +10,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 
 public class ToggleDownfallCommand implements CommandRegistrationCallback {
-    private static final int PERMISSION = 2;
-
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        DecreeUtils.register(dispatcher, CommandConfigs.TOGGLE_DOWNFALL, PERMISSION, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION))
+        DecreeUtils.register(dispatcher, CommandConfigs.TOGGLE_DOWNFALL, command -> command
+                .requires(source -> source.hasPermissionLevel(2))
                 .executes(context -> execute(context.getSource()))
         );
     }

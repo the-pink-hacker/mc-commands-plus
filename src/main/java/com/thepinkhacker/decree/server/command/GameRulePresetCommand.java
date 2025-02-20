@@ -16,13 +16,12 @@ import org.apache.commons.io.FilenameUtils;
 import java.nio.file.Path;
 
 public class GameRulePresetCommand implements CommandRegistrationCallback {
-    private static final int PERMISSION = 2;
     private static final DynamicCommandExceptionType FAILED_TO_LOAD_EXCEPTION = new DynamicCommandExceptionType(preset -> Text.translatable("commands.decree.gamerulepreset.load.fail", preset));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        DecreeUtils.register(dispatcher, CommandConfigs.GAME_RULE_PRESET, PERMISSION, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION))
+        DecreeUtils.register(dispatcher, CommandConfigs.GAME_RULE_PRESET, command -> command
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("save")
                         .requires(source -> source.hasPermissionLevel(4))
                         .then(CommandManager.argument("preset", GameRulePresetArgumentType.preset())

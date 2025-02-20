@@ -16,14 +16,13 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
 public class StopCommand implements CommandRegistrationCallbackDedicated {
-    private static final int PERMISSION = 4;
     private static volatile int timeLeft;
     private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("commands.decree.stop.cancel.failed"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        DecreeUtils.register(dispatcher, CommandConfigs.STOP, PERMISSION, command -> command
-                .requires(source -> source.hasPermissionLevel(PERMISSION))
+        DecreeUtils.register(dispatcher, CommandConfigs.STOP, command -> command
+                .requires(source -> source.hasPermissionLevel(4))
                 .then(CommandManager.literal("cancel")
                         .executes(context -> cancel())
                 )
