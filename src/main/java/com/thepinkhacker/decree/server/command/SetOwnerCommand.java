@@ -22,7 +22,7 @@ public class SetOwnerCommand implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "setowner", command -> command
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.SET_OWNER, PERMISSION_LEVEL, command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.argument("pets", EntityArgumentType.entities())
                         .then(CommandManager.argument("player", EntityArgumentType.player())

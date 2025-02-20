@@ -17,10 +17,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class ClearSpawnPointCommand implements CommandRegistrationCallback {
+    private static final int PERMISSION = 2;
+
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        DecreeUtils.register(dispatcher, "clearspawnpoint", command -> command
-                .requires(source -> source.hasPermissionLevel(2))
+        DecreeUtils.register(dispatcher, CommandConfigs.CLEAR_SPAWN_POINT, PERMISSION, command -> command
+                .requires(source -> source.hasPermissionLevel(PERMISSION))
                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                         .executes(context -> clearSpawnPoint(
                                 context.getSource(),

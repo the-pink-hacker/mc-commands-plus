@@ -25,7 +25,7 @@ public class HungerCommand implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "hunger", command -> command
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.HUNGER, PERMISSION_LEVEL, command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.literal("food")
@@ -194,8 +194,6 @@ public class HungerCommand implements CommandRegistrationCallback {
                         .executes(context -> queryFood(context.getSource()))
                 )
         );
-
-        DecreeUtils.createAlias(dispatcher, node, "food", PERMISSION_LEVEL);
     }
 
     private static int setFood(ServerCommandSource source, Collection<ServerPlayerEntity> players, int food) throws CommandSyntaxException {

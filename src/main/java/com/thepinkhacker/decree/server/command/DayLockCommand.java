@@ -13,9 +13,10 @@ import net.minecraft.world.GameRules;
 
 public class DayLockCommand implements CommandRegistrationCallback {
     private final int PERMISSION_LEVEL = 2;
+
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "daylock", command -> command
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.DAY_LOCK, PERMISSION_LEVEL, command -> command
                 .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                 .then(CommandManager.argument("lock", BoolArgumentType.bool())
                         .executes(context -> execute(
@@ -28,8 +29,6 @@ public class DayLockCommand implements CommandRegistrationCallback {
                         true
                 ))
         );
-
-        DecreeUtils.createAlias(dispatcher, node, "alwaysday", PERMISSION_LEVEL);
     }
 
     private static int execute(ServerCommandSource source, boolean dayLock) {

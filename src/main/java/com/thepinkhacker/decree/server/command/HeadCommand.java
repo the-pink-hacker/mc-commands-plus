@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.thepinkhacker.decree.data.command.CommandConfig;
 import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.entity.SkullBlockEntity;
@@ -37,7 +38,7 @@ public class HeadCommand implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, "head", command -> command
+        LiteralCommandNode<ServerCommandSource> node = DecreeUtils.register(dispatcher, CommandConfigs.HEAD, PERMISSION_LEVEL, command -> command
                 .then(CommandManager.literal("give")
                         .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                         .then(CommandManager.argument("targets", EntityArgumentType.players())
@@ -87,8 +88,6 @@ public class HeadCommand implements CommandRegistrationCallback {
                         )
                 )
         );
-
-        DecreeUtils.createAlias(dispatcher, node, "skull");
     }
 
     private static int give(ServerCommandSource source, Collection<ServerPlayerEntity> targets, Collection<GameProfile> profiles) throws CommandSyntaxException {

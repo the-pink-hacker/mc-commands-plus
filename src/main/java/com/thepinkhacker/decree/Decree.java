@@ -21,6 +21,7 @@ public class Decree implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        CommandConfigs.initialize();
         DecreeArgumentTypes.register();
         DecreeGameRules.register();
 

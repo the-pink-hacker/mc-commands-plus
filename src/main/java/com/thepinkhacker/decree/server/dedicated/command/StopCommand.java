@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.thepinkhacker.decree.server.command.CommandConfigs;
 import com.thepinkhacker.decree.util.command.DecreeUtils;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.network.message.MessageType;
@@ -15,13 +16,14 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
 public class StopCommand implements CommandRegistrationCallbackDedicated {
+    private static final int PERMISSION = 4;
     private static volatile int timeLeft;
     private static final SimpleCommandExceptionType FAILED_CANCEL = new SimpleCommandExceptionType(Text.translatable("commands.decree.stop.cancel.failed"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        DecreeUtils.register(dispatcher, "stop", true, command -> command
-                .requires(source -> source.hasPermissionLevel(4))
+        DecreeUtils.register(dispatcher, CommandConfigs.STOP, PERMISSION, command -> command
+                .requires(source -> source.hasPermissionLevel(PERMISSION))
                 .then(CommandManager.literal("cancel")
                         .executes(context -> cancel())
                 )

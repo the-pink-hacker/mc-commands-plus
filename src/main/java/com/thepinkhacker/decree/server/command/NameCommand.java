@@ -21,6 +21,7 @@ import net.minecraft.text.Text;
 import java.util.Collection;
 
 public class NameCommand implements CommandRegistrationCallback {
+    private static final int PERMISSION = 2;
     public static final SimpleCommandExceptionType ITEM_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.item.name.failed"));
     public static final SimpleCommandExceptionType ITEM_REMOVE_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.item.remove.failed"));
     public static final SimpleCommandExceptionType ENTITY_FAILED = new SimpleCommandExceptionType(Text.translatable("commands.decree.name.entity.name.failed"));
@@ -32,8 +33,8 @@ public class NameCommand implements CommandRegistrationCallback {
             CommandRegistryAccess registryAccess,
             CommandManager.RegistrationEnvironment environment
     ) {
-        DecreeUtils.register(dispatcher, "name", command -> command
-                .requires(source -> source.hasPermissionLevel(2))
+        DecreeUtils.register(dispatcher, CommandConfigs.NAME, PERMISSION, command -> command
+                .requires(source -> source.hasPermissionLevel(PERMISSION))
                 .then(CommandManager.literal("item")
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                 .executes(context -> removeNameItem(
