@@ -16,18 +16,6 @@
 | `toggledownfall`  | Toggles rain.                                                                           |
 | `decree stop`     | An improved version of the `stop` command; it takes a optional duration.                |
 
-### Aliases
-
-| Alias       | Command       |
-|-------------|---------------|
-| `?`         | `help`        |
-| `alwaysday` | `daylock`     |
-| `skull`     | `head`        |
-| `hp`        | `health`      |
-| `food`      | `hunger`      |
-| `mount`     | `decree ride` |
-| `tame`      | `setowner`    |
-
 ## Gamerules
 
 | Gamerule           | Default | Description                                        |
